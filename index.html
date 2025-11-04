@@ -217,8 +217,29 @@
         .add-to-cart-button-new:hover { background-color: rgba(255, 51, 51, 0.1); }
 
 
-        .cart-page { background-color: var(--bg-dark); transform: translateX(100%); transition: transform 0.3s ease-in-out; }
-        .cart-page.open { transform: translateX(0); }
+        /* CORRECTION: S'assurer que la page panier est bien masquée et recouvre tout l'écran */
+        .cart-page { 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark); 
+            z-index: 50;
+            overflow-y: auto;
+            /* Utilisation d'opacity et pointer-events pour garantir le masquage */
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s 0.3s, opacity 0.3s ease-in-out;
+            padding-bottom: 6rem;
+        }
+        .cart-page.open { 
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+        /* FIN CORRECTION */
+
         .cart-page-header { background-color: var(--bg-dark); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
         
         /* NOUVEAU STYLE PILULE ET EFFET LUMIÈRE POUR LES BOUTONS DE POIDS */
@@ -837,7 +858,24 @@
                 itemElement.className = 'cart-page-item';
                 const product = products[item.id.split('-')[0]];
                 
-                let imageUrl = products[item.id.split('-')[0]]?.images?.[0] || 'https://placehold.co/600x600/1e293b/fff?text=Image';
+                let imageUrl = 'https://placehold.co/600x600/1e293b/fff?text=Image';
+                if (product) {
+                    if (product.id === 'caliLoose') {
+                        // Utiliser l'image de présentation pour la vignette du panier
+                        imageUrl = CALI_LOOSE_PRESENTATION_IMAGE;
+                    } else if (product.id === 'frozenSift') {
+                        imageUrl = FROZEN_SIFT_CARD_IMAGE;
+                    } 
+                    else {
+                        // Utiliser le premier média non-vidéo comme vignette
+                        const firstImage = product.images.find(m => !m.includes('.mp4') && !m.includes('youtube.com')); 
+                        if (firstImage) {
+                            imageUrl = firstImage;
+                        } else if (product.images.length > 0) {
+                             imageUrl = product.images[0];
+                        }
+                    }
+                }
 
                 itemElement.innerHTML = `
                     <div class="w-16 h-16 rounded-md overflow-hidden mr-4">
