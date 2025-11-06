@@ -8,6 +8,9 @@
     <!-- Chargement de la police et des icônes --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
+    <!-- AJOUT: Script officiel des Mini Apps Telegram -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
     <style>
         /* Définition des couleurs pour la lueur sombre et l'accentuation */
         :root {
@@ -258,7 +261,8 @@
             visibility: hidden;
             opacity: 0;
             transition: visibility 0s 0.3s, opacity 0.3s ease-in-out;
-            padding-bottom: 6rem;
+            /* MODIFICATION: Augmentation du padding-bottom pour le total sticky */
+            padding-bottom: 10rem; 
         }
         .cart-page.open { 
             visibility: visible;
@@ -469,7 +473,8 @@
         </div>
         <div id="cart-items-page" class="flex-grow p-4">
             <!-- Les articles du panier seront injectés ici --></div>
-        <div class="cart-page-total flex justify-between items-center px-4 py-6 border-t border-gray-700 sticky bottom-0 bg-[--bg-dark] shadow-lg">
+        <!-- MODIFICATION: Positionnement du total du panier -->
+        <div class="cart-page-total flex justify-between items-center px-4 py-6 border-t border-gray-700 sticky bottom-[5rem] bg-[--bg-dark] shadow-lg z-10">
             <div class="text-xl font-bold">Total: <span id="cart-total-page">0€</span></div>
             <button onclick="window.placeOrder()" class="buy-button py-3 px-6 rounded-lg text-lg font-bold order-button active:scale-[0.97]">
                 <i class="fab fa-telegram-plane"></i>
@@ -492,15 +497,16 @@
             <span class="text-xs mt-1">Accueil</span>
         </a>
       
-        <!-- MODIFIÉ: Instagram -> WhatsApp -->
-        <a href="https://chat.whatsapp.com/DfLZzmR55YGEB9uTJBPSPe?mode=wwt" target="_blank" class="nav-link flex flex-col items-center">
+        <!-- MODIFIÉ: Instagram -> WhatsApp + Utilisation de openExternalLink -->
+        <a href="#" onclick="window.openExternalLink('https://chat.whatsapp.com/DfLZzmR55YGEB9uTJBPSPe?mode=wwt', this)" class="nav-link flex flex-col items-center">
             <i class="fab fa-whatsapp text-xl"></i>
             <span class="text-xs mt-1">WhatsApp</span>
         </a>
           
         <!-- SUPPRIMÉ: Lien Démo -->
           
-        <a href="https://t.me/PharmaCompanyy7" target="_blank" class="nav-link flex flex-col items-center">
+        <!-- MODIFIÉ: Utilisation de openExternalLink -->
+        <a href="#" onclick="window.openExternalLink('https://t.me/PharmaCompanyy7', this)" class="nav-link flex flex-col items-center">
             <i class="fab fa-telegram text-xl"></i>
             <span class="text-xs mt-1">Telegram</span>
         </a>
@@ -763,6 +769,8 @@
                 cartCounter.style.display = count > 0 ? 'flex' : 'none';
             }
         }
+        <!-- CORRECTION: Commentaire mal placé corrigé -->
+        // --- Fin Gestion Panier ---
 
         // --- Grille Produits (Logique de génération depuis le JS du template) ---
         function initProductGrid() {
@@ -984,6 +992,32 @@
             }
         }
 
+        // NOUVELLE FONCTION: Pour ouvrir les liens dans une Mini App
+        window.openExternalLink = function(url, element) {
+            // D'abord, on met le lien en "actif"
+            setActiveNav(element);
+            
+            // On vérifie si on est dans une Mini App Telegram
+            if (window.Telegram && window.Telegram.WebApp) {
+                // On utilise l'API de Telegram pour ouvrir le lien
+                window.Telegram.WebApp.openLink(url);
+            } else {
+                // Sinon (si on est dans un navigateur normal), on ouvre dans un nouvel onglet
+                console.log("Hors TMA, ouverture via window.open");
+                window.open(url, '_blank');
+            }
+
+            // Réinitialise l'état actif après un court instant
+            // (on garde l'ancienne logique de surbrillance)
+            setTimeout(() => {
+                const currentActive = cartPage.classList.contains('open') ? 
+                    document.querySelector('a[onclick="window.openCartPage()"]') :
+                    document.querySelector('a[onclick="window.showHome()"]');
+                setActiveNav(currentActive);
+            }, 2000);
+        }
+
+
         // --- Navigation et Panier ---
         window.showHome = function(event) { 
             // event.preventDefault(); // Empêche le href="#" de remonter en haut
@@ -1090,10 +1124,18 @@
              cartItems = {}; saveCart(); updateCartPage(); 
           };
 
+        <!-- CORRECTION: Suppression des blocs de code JS dupliqués et corrompus -->
+
         // --- Initialisation ---
         document.addEventListener('DOMContentLoaded', () => {
              // Afficher le splash screen au début
              if(splashScreen) splashScreen.style.display = 'flex'; // Changé de 'hidden'
+             
+             // Initialisation de l'API Telegram
+             if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.ready();
+                // Vous pouvez ajouter d'autres initialisations TMA ici si nécessaire
+             }
 
              // Initialisation de la boutique après 0.7 seconde
              setTimeout(() => {
@@ -1111,21 +1153,8 @@
 
              }, 700); // Durée ajustée à 0.7 seconde
              
-             // Gestion des clics sur les liens de navigation externes
-             navLinks.forEach(link => {
-                if(link.target === '_blank') {
-                    link.addEventListener('click', () => {
-                        setActiveNav(link);
-                        // Réinitialise l'état actif après un court instant
-                        setTimeout(() => {
-                            const currentActive = cartPage.classList.contains('open') ? 
-                                document.querySelector('a[onclick="window.openCartPage()"]') :
-                                document.querySelector('a[onclick="window.showHome()"]');
-                            setActiveNav(currentActive);
-                        }, 2000);
-                    });
-                }
-             });
+             // SUPPRIMÉ: L'ancienne logique de gestion des clics sur les liens externes
+             // est maintenant gérée par window.openExternalLink
          });
 
          window.showProduct = showProduct;
