@@ -1,14 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boutique Pharma</title>
-    <!-- Chargement de Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chargement de la police et des icônes -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chargement de Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chargement de la police et des icônes --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
@@ -126,13 +123,33 @@
         }
         .category-pill:active { transform: scale(0.95); }
 
+        /* NOUVEAU: Style "bulle" pour la catégorie sur la page produit */
+        .category-bubble {
+            background-color: rgba(63, 63, 90, 0.5); /* Fond transparent */
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 0.35rem 0.75rem; /* Padding horizontal légèrement ajusté pour mieux s'adapter */
+            border-radius: 50px; /* Forme pilule/bulle */
+            font-size: 0.875rem; /* Taille de police plus petite */
+            font-weight: 600; /* Garder le font-semibold */
+            text-align: center;
+            
+            /* Styles pour gérer les textes longs */
+            max-width: 150px; /* Largeur maximale pour la bulle */
+            white-space: nowrap; /* Empêche le retour à la ligne */
+            overflow: hidden; /* Cache le texte qui dépasse */
+            text-overflow: ellipsis; /* Ajoute des points de suspension si le texte est tronqué */
+        }
+        /* FIN NOUVEAU */
+
         /* Correction CSS pour le carrousel d'accueil */
-         #hero-carousel-track {
+          #hero-carousel-track {
             display: flex;
             transition: transform 0.5s ease-in-out;
             /* width: fit-content; // Géré par JS */
-         }
-         .hero-carousel-item {
+          }
+          .hero-carousel-item {
             flex-shrink: 0;
             width: 100%; /* Géré par JS */
             height: auto; 
@@ -140,38 +157,47 @@
             justify-content: center;
             align-items: center;
             position: relative;
-         }
+          }
         
         /* Ajustements pour le carrousel d'accueil pour s'adapter à l'image */
-         #hero-carousel-container { 
+          #hero-carousel-container { 
             height: auto; 
             overflow: hidden; 
-         }
-         #hero-carousel-track img,
-         #hero-carousel-track video {
+          }
+          #hero-carousel-track img,
+          #hero-carousel-track video {
             height: 100%; 
             width: 100%;
             object-fit: cover; 
             max-height: 250px; /* Limiter la hauteur pour les grands écrans */
-         }
+          }
         /* Fin ajustements */
 
-
+        /* MODIFICATION DEMANDÉE : Amélioration du visuel de la fiche produit */
         .product-page-image-container { 
             width: 100%;
-            height: 60vh; 
+            /* CHANGEMENT: Remplacement du ratio carré par un ratio 4/5 (plus grand/haut) */
+            aspect-ratio: 4 / 5; /* <-- MODIFIÉ */
+            /* height: 350px; <-- SUPPRIMÉ */
+            max-height: 70vh; /* <-- MODIFIÉ: Augmentation de la hauteur max */
             overflow: hidden;
             position: relative;
             background-color: #000; 
+            /* Ajout de marges autour */
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 400px;
         }
         
-        /* Styles pour les médias du carrousel de la fiche produit */
+        /* MODIFICATION DEMANDÉE : Styles pour les médias du carrousel de la fiche produit (zoom léger et centrage) */
         .carousel-item img, .carousel-item iframe, .carousel-item video {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* CHANGEMENT: 'cover' (remplir/adapter) remplacé par 'contain' (ajuster au milieu) */
+            object-position: center calc(50% - 2cm); /* MODIFIÉ: Centré et décalé vers le haut de 2cm */
             border-radius: 12px;
         }
+        /* FIN MODIFICATION DEMANDÉE */
         
         .carousel-slide { display: flex; transition: transform 0.5s ease-in-out; }
         .carousel-item { flex-shrink: 0; width: 100%; }
@@ -359,55 +385,53 @@
 </head>
 <body class="bg-[--bg-dark] text-white">
 
-    <!-- Écran de Démarrage (Splash Screen) -->
-    <div id="splash-screen">
+    <!-- Écran de Démarrage (Splash Screen) --><div id="splash-screen">
         <img src="https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/Logo.jpg" alt="Pharma Logo" class="splash-logo">
     </div>
 
-    <!-- Section principale de l'application -->
-    <div id="main-app" class="container-main mx-auto p-4 max-w-sm overflow-hidden pb-32" style="visibility: hidden;">
-        <!-- Bannière Héro -->
-        <header class="flex flex-col items-center justify-center p-8">
+    <!-- Section principale de l'application --><div id="main-app" class="container-main mx-auto p-4 max-w-sm overflow-hidden pb-32" style="visibility: hidden;">
+        <!-- Bannière Héro --><header class="flex flex-col items-center justify-center p-8">
             <div id="hero-carousel-container" class="relative w-full h-auto bg-gray-700 rounded-xl overflow-hidden shadow-lg">
                 <div id="hero-carousel-track" class="carousel-slide w-full h-full">
-                    <!-- Les images du carrousel d'accueil seront injectées ici -->
-                </div>
+                    <!-- Les images du carrousel d'accueil seront injectées ici --></div>
                 <div id="hero-carousel-dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-                    <!-- Les points de navigation du carrousel seront injectés ici -->
-                </div>
+                    <!-- Les points de navigation du carrousel seront injectés ici --></div>
             </div>
         </header>
 
         <div class="separator"></div>
         
-        <!-- Section des catégories -->
-        <section class="py-8">
+        <!-- Section des catégories --><section class="py-8">
             <h2 class="text-xl font-bold mb-4 text-center">Catégorie</h2>
-            <div class="flex justify-center flex-wrap gap-3 px-4">
+            <!-- MODIFICATION DEMANDÉE : Ajustement de la largeur pour une meilleure organisation (encore réduit) --><div class="category-section-wrapper flex justify-center flex-wrap gap-3 mx-auto max-w-[18rem]">
                 <span class="category-pill" onclick="toggleFilter(this, 'cali canadienne')">CALI CANADIENNE</span><span class="category-pill" onclick="toggleFilter(this, 'hash')">HASH</span><span class="category-pill" onclick="toggleFilter(this, 'bonbon')">BONBON</span><span class="category-pill" onclick="toggleFilter(this, 'usa import')">USA IMPORT</span>
             </div>
-        </section>
+            <!-- FIN MODIFICATION DEMANDÉE --></section>
 
-        <!-- Ligne de séparation -->
-        <div class="separator"></div>
+        <!-- Ligne de séparation --><div class="separator"></div>
 
-        <!-- Grille des produits -->
-        <section id="product-grid" class="pt-4">
-            <!-- Les cartes de produits seront générées dynamiquement ici -->
-        </section>
+        <!-- Grille des produits --><section id="product-grid" class="pt-4">
+            <!-- Les cartes de produits seront générées dynamiquement ici --></section>
     </div>
 
-    <!-- Section Fiche Produit (cachée par défaut) -->
-    <div id="product-page" class="hidden relative">
+    <!-- Section Fiche Produit (cachée par défaut) --><div id="product-page" class="hidden relative">
         <div class="product-page-content mx-auto p-4 max-w-sm overflow-hidden pb-32">
+            <!-- MODIFICATION: Layout de l'en-tête ajusté pour centrer le logo et mettre la catégorie à droite -->
             <header class="p-4 bg-transparent text-white flex justify-between items-center sticky top-0 z-50">
-                <button onclick="window.hideProduct()" class="text-white text-2xl p-2 rounded-full hover:bg-[#33334d] transition-colors active:scale-90"><i class="fas fa-arrow-left"></i></button>
-                <h1 id="product-category" class="text-xl font-semibold uppercase"></h1>
+                <!-- Gauche: Bouton retour (taille fixe pour l'équilibre) -->
+                <!-- MODIFICATION: Ajout du style bulle -->
+                <button onclick="window.hideProduct()" class="text-white text-2xl rounded-full bg-[rgba(63,63,90,0.5)] backdrop-blur-sm border border-[rgba(255,255,255,0.2)] hover:bg-[rgba(63,63,90,0.8)] transition-colors active:scale-90 w-10 h-10 flex items-center justify-center"><i class="fas fa-arrow-left"></i></button>
+                
+                <!-- Centre: Logo (MODIFIÉ: h-12 w-12 -> h-16 w-16) -->
+                <img src="https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/Logo.jpg" alt="Logo" class="h-16 w-16 rounded-md border border-white/20">
+                
+                <!-- Droite: Bulle de catégorie -->
+                <h1 id="product-category" class="category-bubble uppercase"></h1>
             </header>
-            <div class="product-page-image-container rounded-xl shadow-lg mb-4">
+            
+            <!-- MODIFICATION APPLIQUÉE : Le conteneur d'image utilise maintenant les nouveaux styles CSS --><div class="product-page-image-container rounded-xl shadow-lg mb-4">
                 <div id="carousel-track" class="carousel-slide">
-                    <!-- Les images/videos de toutes les variétés seront injectées ici -->
-                </div>
+                    <!-- Les images/videos de toutes les variétés seront injectées ici --></div>
                 <button class="carousel-button left" onclick="window.prevSlide()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -424,8 +448,7 @@
                 <h2 id="product-name" class="text-2xl font-bold mt-4 mb-2"></h2>
                 
                 <div id="product-options" class="mb-6">
-                    <!-- Les options de variété et de poids seront injectées ici -->
-                </div>
+                    <!-- Les options de variété et de poids seront injectées ici --></div>
 
                 <div class="flex flex-col space-y-4">
                     <button id="buy-now-btn" class="action-button order-button">
@@ -438,53 +461,44 @@
         </div>
     </div>
 
-    <!-- Page du panier (cachée par défaut) -->
-    <div id="cart-page" class="cart-page">
-        <div class="cart-page-header flex justify-between items-center">
+    <!-- Page du panier (cachée par défaut) --><div id="cart-page" class="cart-page">
+        <div class="cart-page-header flex justify-between items-center p-4 sticky top-0 z-10">
             <button onclick="window.closeCartPage()" class="text-white text-2xl p-2 rounded-full hover:bg-[#33334d] transition-colors active:scale-90"><i class="fas fa-arrow-left"></i></button>
             <h1 class="text-2xl font-bold">Mon Panier</h1>
-            <button onclick="window.clearCart()" class="text-gray-400 hover:text-white transition-colors active:scale-90"><i class="fas fa-trash-alt"></i></button>
+            <button onclick="window.clearCart()" class="text-gray-400 hover:text-white transition-colors active:scale-90 p-2"><i class="fas fa-trash-alt"></i></button>
         </div>
         <div id="cart-items-page" class="flex-grow p-4">
-            <!-- Les articles du panier seront injectés ici -->
-        </div>
-        <div class="cart-page-total flex justify-between items-center px-4 py-6 border-t border-gray-700 rounded-lg shadow-lg">
+            <!-- Les articles du panier seront injectés ici --></div>
+        <div class="cart-page-total flex justify-between items-center px-4 py-6 border-t border-gray-700 sticky bottom-0 bg-[--bg-dark] shadow-lg">
             <div class="text-xl font-bold">Total: <span id="cart-total-page">0€</span></div>
-            <button onclick="placeOrder()" class="buy-button py-3 px-6 rounded-lg text-lg font-bold order-button active:scale-[0.97]">
+            <button onclick="window.placeOrder()" class="buy-button py-3 px-6 rounded-lg text-lg font-bold order-button active:scale-[0.97]">
                 <i class="fab fa-telegram-plane"></i>
                 <span class="ml-2">COMMANDER</span>
             </button>
         </div>
     </div>
 
-    <!-- Modal pour les messages (Transformé en Toast) -->
-    <div id="message-modal" class="hidden">
+    <!-- Modal pour les messages (Transformé en Toast) --><div id="message-modal">
         <div class="modal-content">
             <p id="modal-text" class="text-sm font-semibold"></p>
             <button onclick="window.closeModal()">OK</button>
         </div>
     </div>
 
-    <!-- Ligne de séparation avant la navigation -->
-    <div class="separator"></div>
-
-    <!-- Barre de navigation en bas -->
-     <nav class="nav-bar fixed bottom-4 flex justify-around items-center h-16 shadow-lg">
-         
-        <a href="#" onclick="window.showHome()" class="nav-link flex flex-col items-center">
+    <!-- Barre de navigation en bas --><nav class="nav-bar fixed bottom-4 flex justify-around items-center h-16 shadow-lg">
+        
+        <a href="#" onclick="window.showHome()" class="nav-link flex flex-col items-center active">
             <i class="fas fa-home text-xl"></i>
             <span class="text-xs mt-1">Accueil</span>
         </a>
       
-        <a href="https://www.instagram.com/" target="_blank" class="nav-link flex flex-col items-center">
-            <i class="fab fa-instagram text-xl"></i>
-            <span class="text-xs mt-1">Instagram</span>
+        <!-- MODIFIÉ: Instagram -> WhatsApp -->
+        <a href="https://chat.whatsapp.com/DfLZzmR55YGEB9uTJBPSPe?mode=wwt" target="_blank" class="nav-link flex flex-col items-center">
+            <i class="fab fa-whatsapp text-xl"></i>
+            <span class="text-xs mt-1">WhatsApp</span>
         </a>
           
-        <a href="https://www.example.com/" target="_blank" class="nav-link flex flex-col items-center">
-            <i class="fas fa-link text-xl"></i>
-            <span class="text-xs mt-1">Lien Démo</span>
-        </a>
+        <!-- SUPPRIMÉ: Lien Démo -->
           
         <a href="https://t.me/PharmaCompanyy7" target="_blank" class="nav-link flex flex-col items-center">
             <i class="fab fa-telegram text-xl"></i>
@@ -499,8 +513,7 @@
       
      </nav>
 
-    <!-- Scripts JavaScript -->
-    <script>
+    <!-- Scripts JavaScript --><script>
         // #############################################################
         // # DÉBUT DE L'INJECTION DE DONNÉES
         // #############################################################
@@ -671,68 +684,72 @@
         const heroCarouselTrack = document.getElementById('hero-carousel-track'); // Accueil
         const heroCarouselDots = document.getElementById('hero-carousel-dots'); // Accueil
         const splashScreen = document.getElementById('splash-screen'); // Ajouté
+        const navLinks = document.querySelectorAll('.nav-link'); // Pour la navigation active
 
         // --- Carrousel d'Accueil (JS CORRIGÉ) ---
-         function updateHeroCarousel() {
-             if (!heroCarouselTrack || !heroCarouselDots || !heroCarouselContainer) return; 
+          function updateHeroCarousel() {
+              if (!heroCarouselTrack || !heroCarouselDots || !heroCarouselContainer) return; 
 
-             const totalImages = (heroImages || []).length;
-             heroCarouselTrack.innerHTML = '';
-             heroCarouselDots.innerHTML = '';
-             
-             // S'il n'y a pas d'images, on cache le conteneur
-             if (totalImages === 0) {
-                 heroCarouselContainer.style.display = 'none';
-                 return;
-             }
-             heroCarouselContainer.style.display = 'block';
-             
-             heroCarouselTrack.style.width = `${totalImages * 100}%`;
-             const slideWidth = 100 / totalImages;
+              const totalImages = (heroImages || []).length;
+              heroCarouselTrack.innerHTML = '';
+              heroCarouselDots.innerHTML = '';
+              
+              // S'il n'y a pas d'images, on cache le conteneur
+              if (totalImages === 0) {
+                  heroCarouselContainer.style.display = 'none';
+                  return;
+              }
+              heroCarouselContainer.style.display = 'block';
+              
+              heroCarouselTrack.style.width = `${totalImages * 100}%`;
+              const slideWidth = 100 / totalImages;
 
-             (heroImages || []).forEach((url, index) => { 
-                 const item = document.createElement('div');
-                 item.className = 'hero-carousel-item'; // Utilisation de la nouvelle classe
-                 item.style.width = `${slideWidth}%`;
-                 
-                 let content;
-                 if (url.toLowerCase().includes('.mp4')) { 
-                    content = `<video autoplay controls playsinline loop muted class="w-full h-full object-cover"><source src="${url}" type="video/mp4">Vidéo non supportée.</video>`;
-                 } else {
-                    content = `<img src="${url}" alt="Image d'accueil ${index + 1}" class="w-full h-full object-cover" onerror="this.parentElement.style.display='none';">`;
-                 }
-                 item.innerHTML = content;
-                 
-                 heroCarouselTrack.appendChild(item);
+              (heroImages || []).forEach((url, index) => { 
+                  const item = document.createElement('div');
+                  item.className = 'hero-carousel-item'; // Utilisation de la nouvelle classe
+                  item.style.width = `${slideWidth}%`;
+                  
+                  let content;
+                  if (url.toLowerCase().includes('.mp4')) { 
+                      content = `<video autoplay controls playsinline loop muted class="w-full h-full object-cover"><source src="${url}" type="video/mp4">Vidéo non supportée.</video>`;
+                  } else {
+                      content = `<img src="${url}" alt="Image d'accueil ${index + 1}" class="w-full h-full object-cover" onerror="this.parentElement.style.display='none';">`;
+                  }
+                  item.innerHTML = content;
+                  
+                  heroCarouselTrack.appendChild(item);
 
-                 const dot = document.createElement('span');
-                 dot.setAttribute('data-index', index);
-                 dot.onclick = () => goToHeroSlide(index); 
-                 dot.className = index === heroSlideIndex ? 'active' : ''; 
-                 heroCarouselDots.appendChild(dot);
-             });
-             heroCarouselDots.style.display = (heroImages && heroImages.length > 1) ? 'flex' : 'none';
-             if (heroCarouselTrack) { 
-                heroCarouselTrack.style.transform = `translateX(-${heroSlideIndex * slideWidth}%)`;
-             }
-         }
+                  const dot = document.createElement('span');
+                  dot.className = 'w-2 h-2 rounded-full bg-white/50 transition-all cursor-pointer';
+                  dot.setAttribute('data-index', index);
+                  dot.onclick = () => goToHeroSlide(index); 
+                  if(index === heroSlideIndex) dot.classList.add('bg-white');
+                  heroCarouselDots.appendChild(dot);
+              });
+              
+              heroCarouselDots.style.display = (heroImages && heroImages.length > 1) ? 'flex' : 'none';
+              
+              if (heroCarouselTrack) { 
+                  heroCarouselTrack.style.transform = `translateX(-${heroSlideIndex * slideWidth}%)`;
+              }
+          }
 
-         function goToHeroSlide(index) {
-             if (index === heroSlideIndex) return;
-             heroSlideIndex = index;
-             updateHeroCarousel();
-             startHeroCarousel(); // Redémarre le timer
-         }
+          function goToHeroSlide(index) {
+              if (index === heroSlideIndex) return;
+              heroSlideIndex = index;
+              updateHeroCarousel();
+              startHeroCarousel(); // Redémarre le timer
+          }
 
-         function startHeroCarousel() {
-             if (heroCarouselInterval) clearInterval(heroCarouselInterval);
-             if (heroImages && heroImages.length > 1) {
-                 heroCarouselInterval = setInterval(() => {
-                     heroSlideIndex = (heroSlideIndex + 1) % heroImages.length;
-                     updateHeroCarousel();
-                 }, 3000); // 3 secondes
-             }
-         }
+          function startHeroCarousel() {
+              if (heroCarouselInterval) clearInterval(heroCarouselInterval);
+              if (heroImages && heroImages.length > 1) {
+                  heroCarouselInterval = setInterval(() => {
+                      heroSlideIndex = (heroSlideIndex + 1) % heroImages.length;
+                      updateHeroCarousel();
+                  }, 3000); // 3 secondes
+              }
+          }
         // --- Fin Carrousel d'Accueil ---
 
 
@@ -767,18 +784,18 @@
                      
                      let extraInfo = '';
                      if (product.extraInfo) {
-                           const infoTextColor = product.extraInfoColor || '#ff3333'; // Rouge clair
-                           const infoBgColor = product.extraInfoBackgroundColor || '#000000'; // Fond noir
-                           extraInfo += `<p class="text-xs font-bold mt-1"><span class="px-2 py-0.5 rounded-full inline-block" style="color: ${infoTextColor}; background-color: ${infoBgColor};">${product.extraInfo.toUpperCase()}</span></p>`;
+                             const infoTextColor = product.extraInfoColor || '#ff3333'; // Rouge clair
+                             const infoBgColor = product.extraInfoBackgroundColor || '#000000'; // Fond noir
+                             extraInfo += `<p class="text-xs font-bold mt-1"><span class="px-2 py-0.5 rounded-full inline-block" style="color: ${infoTextColor}; background-color: ${infoBgColor};">${product.extraInfo.toUpperCase()}</span></p>`;
                      } else if (product.varieties && product.varieties.length > 1 && !(product.varieties.length === 1 && product.varieties[0] === product.name)) {
-                           extraInfo += `<p class="text-xs font-bold mt-1"><span class="bg-red-900/50 px-2 py-0.5 rounded-full inline-block text-red-300">${product.varieties.length} VARIÉTÉS</span></p>`;
+                             extraInfo += `<p class="text-xs font-bold mt-1"><span class="bg-red-900/50 px-2 py-0.5 rounded-full inline-block text-red-300">${product.varieties.length} VARIÉTÉS</span></p>`;
                      }
 
                      const titleColor = product.color || '#ffffff'; // Applique couleur titre
                      
                      // NOUVEAU: Logique de prix "À partir de"
                      const validPrices = Object.values(product.prices).filter(p => p !== null && p > 0);
-                     const priceText = validPrices.length > 0 ? `A partir de ${Math.min(...validPrices)}€` : 'Prix sur demande';
+                     const priceText = validPrices.length > 0 ? `À partir de ${Math.min(...validPrices)}€` : 'Prix sur demande';
                      
                      card.innerHTML = `
                          <img src="${imageUrl}" alt="${product.name}" class="w-full h-32 object-cover rounded-t-xl" onerror="this.src='https://placehold.co/600x400/2a2a47/fff?text=Img'; this.onerror=null;">
@@ -806,7 +823,7 @@
                 }
             }
             initProductGrid();
-         };
+        };
 
 
         // --- Carrousel Page Produit ---
@@ -814,7 +831,7 @@
         function playCurrentVideo() {
             const currentItem = carouselTrack?.children[currentSlide]; 
             if (currentItem) { const video = currentItem.querySelector('video'); if (video) { video.currentTime = 0; video.play().catch(e => console.log('Autoplay blocked:', e)); } }
-         }
+          }
         function updateCarousel() { 
             const totalSlides = carouselTrack?.children.length || 0; 
             if (totalSlides > 0) { 
@@ -848,8 +865,7 @@
             const modalText = document.getElementById('modal-text');
             if (modalText) modalText.textContent = message;
             if (modal) {
-                 modal.classList.remove('hidden');
-                 setTimeout(() => modal.classList.add('show'), 10); // Permet la transition d'entrée
+                 modal.classList.add('show');
             }
             
             if (toastTimer) clearTimeout(toastTimer);
@@ -860,7 +876,6 @@
         window.closeModal = function() { 
             const modal = document.getElementById('message-modal');
             if (modal) modal.classList.remove('show');
-            // 'hidden' n'est plus nécessaire car 'opacity: 0' et 'pointer-events: none' font le travail
         } 
 
         // --- Logique Page Produit (JS Corrigé pour .active) ---
@@ -873,30 +888,30 @@
              let varietyFound = false;
              
              product.varieties.forEach(varietyName => {
-                const mediaUrls = (product.mediaMap && product.mediaMap[varietyName]) 
-                                    ? product.mediaMap[varietyName] 
-                                    : product.images; // Fallback
-                
-                if (mediaUrls && mediaUrls.length > 0) {
-                     mediaUrls.forEach(url => {
-                         const mediaElement = document.createElement('div'); 
-                         mediaElement.className = 'carousel-item'; 
-                         mediaElement.setAttribute('data-variety', varietyName); // Important: lie le slide à la variété
-                         let content = url.toLowerCase().includes('.mp4') ? `<video autoplay controls playsinline loop muted class="w-full h-full"><source src="${url}" type="video/mp4">Vidéo non supportée.</video>` : `<img src="${url}" alt="${product.name}" class="w-full h-full" onerror="this.src='https://placehold.co/600x400/2a2a47/fff?text=Img'; this.onerror=null;">`;
-                         mediaElement.innerHTML = content; 
-                         carouselTrack.appendChild(mediaElement);
-                         
-                         // Trouve le premier slide qui correspond à la variété highlight
-                         if (varietyName === varietyToHighlight && !varietyFound) {
-                             currentSlide = slideIndex;
-                             varietyFound = true;
-                         }
-                         slideIndex++;
-                     });
-                }
+                 const mediaUrls = (product.mediaMap && product.mediaMap[varietyName]) 
+                                          ? product.mediaMap[varietyName] 
+                                          : product.images; // Fallback
+                 
+                 if (mediaUrls && mediaUrls.length > 0) {
+                      mediaUrls.forEach(url => {
+                          const mediaElement = document.createElement('div'); 
+                          mediaElement.className = 'carousel-item'; 
+                          mediaElement.setAttribute('data-variety', varietyName); // Important: lie le slide à la variété
+                          let content = url.toLowerCase().includes('.mp4') ? `<video autoplay controls playsinline loop muted class="w-full h-full"><source src="${url}" type="video/mp4">Vidéo non supportée.</video>` : `<img src="${url}" alt="${product.name}" class="w-full h-full" onerror="this.src='https://placehold.co/600x400/2a2a47/fff?text=Img'; this.onerror=null;">`;
+                          mediaElement.innerHTML = content; 
+                          carouselTrack.appendChild(mediaElement);
+                          
+                          // Trouve le premier slide qui correspond à la variété highlight
+                          if (varietyName === varietyToHighlight && !varietyFound) {
+                              currentSlide = slideIndex;
+                              varietyFound = true;
+                          }
+                          slideIndex++;
+                      });
+                 }
              });
              
-             if (carouselTrack.children.length === 0) {
+             if (carouselTrack.children.length === 0 && product.images && product.images.length > 0) {
                  carouselTrack.innerHTML = `<div class="carousel-item" data-variety="${varietyToHighlight}"><img src="${product.images[0]}" class="w-full h-full object-cover"></div>`;
              }
              
@@ -937,7 +952,7 @@
             
             let weightHTML = ''; 
             if (currentProduct.prices) { 
-                weightHTML = `<div><h3 class="text-xl font-bold mb-3">Poids et Prix:</h3><div class="flex flex-wrap gap-3" id="weight-options">${Object.keys(currentProduct.prices).map(w => `<button data-weight="${w}" class="weight-button" onclick="selectWeight('${w}')"><span class="weight-text">${w}</span><span class="price-text">${currentProduct.prices[w] !== null ? `${currentProduct.prices[w]}€` : ''}</span></button>`).join('')}</div></div>`; 
+                weightHTML = `<div><h3 class="text-xl font-bold mb-3">Poids et Prix:</h3><div class="flex flex-wrap gap-3" id="weight-options">${Object.keys(currentProduct.prices).map(w => `<button data-weight="${w}" class="weight-button" onclick="selectWeight('${w}')"><span class="weight-text">${w}</span><span class="price-text">${currentProduct.prices[w] !== null ? ` ${currentProduct.prices[w]}€` : ''}</span></button>`).join('')}</div></div>`; 
             }
             
             if (productOptions) productOptions.innerHTML = varietyHTML + weightHTML;
@@ -960,12 +975,59 @@
         }
 
         window.selectWeight = function(weight) { selectedWeight = weight; document.querySelectorAll('.weight-button').forEach(btn => btn.classList.remove('active')); document.querySelector(`[data-weight="${weight}"]`).classList.add('active'); };
+        
+        // --- Gestion de la navigation et de l'état actif ---
+        function setActiveNav(clickedLink) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            if (clickedLink) {
+                clickedLink.classList.add('active');
+            }
+        }
 
         // --- Navigation et Panier ---
-        window.showHome = function() { closeCartPage(); pauseAllVideos(); productPage?.classList.add('hidden'); mainApp?.classList.remove('hidden'); currentFilter = null; document.querySelectorAll('.category-pill').forEach(pill => pill.classList.remove('active')); initProductGrid(); }
-        window.hideProduct = function() { pauseAllVideos(); productPage?.classList.add('hidden'); mainApp?.classList.remove('hidden'); }
-        window.openCartPage = function() { pauseAllVideos(); cartPage?.classList.add('open'); mainApp?.classList.add('hidden'); productPage?.classList.add('hidden'); updateCartPage(); }
-        window.closeCartPage = function() { cartPage?.classList.remove('open'); mainApp?.classList.remove('hidden'); }
+        window.showHome = function(event) { 
+            // event.preventDefault(); // Empêche le href="#" de remonter en haut
+            const homeLink = document.querySelector('a[onclick="window.showHome()"]');
+            setActiveNav(homeLink);
+            
+            closeCartPage(); 
+            pauseAllVideos(); 
+            productPage?.classList.add('hidden'); 
+            mainApp?.classList.remove('hidden'); 
+            currentFilter = null; 
+            document.querySelectorAll('.category-pill').forEach(pill => pill.classList.remove('active')); 
+            initProductGrid(); 
+        }
+        
+        window.hideProduct = function() { 
+            pauseAllVideos(); 
+            productPage?.classList.add('hidden'); 
+            mainApp?.classList.remove('hidden'); 
+            // Au retour à l'accueil, réactivez le bouton Accueil
+            const homeLink = document.querySelector('a[onclick="window.showHome()"]');
+            setActiveNav(homeLink);
+        }
+        
+        window.openCartPage = function(event) { 
+            // event.preventDefault();
+            const cartLink = document.querySelector('a[onclick="window.openCartPage()"]');
+            setActiveNav(cartLink);
+            
+            pauseAllVideos(); 
+            cartPage?.classList.add('open'); 
+            mainApp?.classList.add('hidden'); 
+            productPage?.classList.add('hidden'); 
+            updateCartPage(); 
+        }
+        
+        window.closeCartPage = function() { 
+            cartPage?.classList.remove('open'); 
+            mainApp?.classList.remove('hidden'); 
+            // Au retour à l'accueil, réactivez le bouton Accueil
+            const homeLink = document.querySelector('a[onclick="window.showHome()"]');
+            setActiveNav(homeLink);
+        }
+
         function updateCartPage() {
             const cartItemsContainer = document.getElementById('cart-items-page'); if (!cartItemsContainer) return; cartItemsContainer.innerHTML = ''; let total = 0; const items = Object.values(cartItems);
             if (items.length === 0) { cartItemsContainer.innerHTML = '<p class="text-center text-gray-400 py-10">Votre panier est vide.</p>'; document.getElementById('cart-total-page').textContent = `0€`; return; }
@@ -973,7 +1035,7 @@
                 const itemPrice = item.price || 0; // <-- NOUVEAU: Gère le prix null
                 const itemTotal = itemPrice * item.quantity; 
                 total += itemTotal;
-                const itemElement = document.createElement('div'); itemElement.className = 'cart-page-item';
+                const itemElement = document.createElement('div'); itemElement.className = 'cart-page-item flex items-center p-2 mb-2 bg-[--card-bg] rounded-lg shadow-md';
                 const product = products[item.id.split('-')[0]]; let imageUrl = product && product.images.length > 0 ? product.images[0] : 'https://placehold.co/100/1e1d2c/fff?text=Img';
                 itemElement.innerHTML = `<div class="w-16 h-16 rounded-md overflow-hidden mr-4 flex-shrink-0"><img src="${imageUrl}" alt="${item.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100/2a2a47/fff?text=Img'; this.onerror=null;"></div><div class="flex-1 min-w-0"><h4 class="font-semibold truncate">${item.name}</h4><p class="text-sm text-gray-400 truncate">${item.weight} - ${item.variety}</p><p class="text-sm text-gray-400">Quantité: ${item.quantity}</p></div><div class="text-right ml-4 flex-shrink-0"><p class="font-bold">${item.price !== null ? `${itemTotal}€` : '(Sur demande)'}</p><button onclick="removeFromCart('${item.id}')" class="text-red-500 hover:text-red-400 transition-colors text-xs mt-1 active:scale-90"><i class="fas fa-trash-alt mr-1"></i>Supprimer</button></div>`;
                 cartItemsContainer.appendChild(itemElement);
@@ -1001,7 +1063,19 @@
         }
         
         window.removeFromCart = (itemId) => { delete cartItems[itemId]; saveCart(); updateCartPage(); };
-        window.clearCart = () => { if(confirm("Vider le panier ?")) { cartItems = {}; saveCart(); updateCartPage(); } };
+        
+        // Correction : Remplacement de confirm() par un simple appel
+        window.clearCart = () => { 
+            // if(confirm("Vider le panier ?")) { // Remplacé
+            if (Object.keys(cartItems).length > 0) {
+                cartItems = {}; 
+                saveCart(); 
+                updateCartPage(); 
+                showMessage("Panier vidé.");
+            }
+            // } 
+        };
+        
         window.placeOrder = () => {
              const items = Object.values(cartItems); if (items.length === 0) { showMessage("Votre panier est vide."); return; }
              let itemsString = ""; let total = 0;
@@ -1014,12 +1088,12 @@
              const fullMessage = `Salut, je voudrais passer une commande : ${itemsString} | Total de la commande : ${total > 0 ? `${total}€` : 'A discuter'} | Merci !`; // <-- NOUVEAU
              window.location.href = `${orderUrl}?text=${encodeURIComponent(fullMessage)}`;
              cartItems = {}; saveCart(); updateCartPage(); 
-         };
+          };
 
         // --- Initialisation ---
         document.addEventListener('DOMContentLoaded', () => {
              // Afficher le splash screen au début
-             if(splashScreen) splashScreen.classList.remove('hidden');
+             if(splashScreen) splashScreen.style.display = 'flex'; // Changé de 'hidden'
 
              // Initialisation de la boutique après 0.7 seconde
              setTimeout(() => {
@@ -1030,12 +1104,31 @@
                  updateHeroCarousel();
                  startHeroCarousel();
                  updateCartCounter();
+                 
+                 // Définir l'onglet actif au démarrage
+                 const homeLink = document.querySelector('a[onclick="window.showHome()"]');
+                 setActiveNav(homeLink);
 
              }, 700); // Durée ajustée à 0.7 seconde
+             
+             // Gestion des clics sur les liens de navigation externes
+             navLinks.forEach(link => {
+                if(link.target === '_blank') {
+                    link.addEventListener('click', () => {
+                        setActiveNav(link);
+                        // Réinitialise l'état actif après un court instant
+                        setTimeout(() => {
+                            const currentActive = cartPage.classList.contains('open') ? 
+                                document.querySelector('a[onclick="window.openCartPage()"]') :
+                                document.querySelector('a[onclick="window.showHome()"]');
+                            setActiveNav(currentActive);
+                        }, 2000);
+                    });
+                }
+             });
          });
 
-         window.showProduct = showProduct; window.hideProduct = hideProduct; window.openCartPage = openCartPage; window.closeCartPage = closeCartPage; window.closeModal = closeModal; window.selectWeight = selectWeight;
+         window.showProduct = showProduct;
     </script>
 </body>
 </html>
-
