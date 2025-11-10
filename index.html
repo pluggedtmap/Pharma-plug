@@ -1,67 +1,58 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boutique Pharma</title>
-    <!-- Chargement de Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chargement de la police et des icônes --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Découvrez notre sélection exclusive de produits de qualité.">
+    <link rel="icon" href="https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/Logo.jpg">
+    
+    <!-- Chargement de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chargement de la police et des icônes -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/draft-js/0.11.7/Draft.css">
     
     <!-- AJOUT: Script officiel des Mini Apps Telegram -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
     <style>
-        /* Définition des couleurs pour la lueur sombre et l'accentuation */
         :root {
-            --bg-dark: #100f1c; /* Fond très sombre (injecté) */
-            --accent-red: #8b0000; /* Rouge profond/sombre */
-            --accent-light: #ff3333; /* Rouge vif pour l'interaction */
+            --bg-dark: #100f1c;
+            --accent-red: #8a000e;
+            --accent-light: #ff3333;
             --card-bg: #1e1d2c;
         }
-
-        /* Styles de base et personnalisés */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark); /* Fond très sombre */
+            background-color: var(--bg-dark);
             color: #ffffff;
             overflow-x: hidden;
             position: relative;
         }
-
-        /* --- EFFET VISUEL DE LUEUR ROUGE SOMBRE --- */
+        
         body::before, body::after {
             content: '';
             position: fixed;
             border-radius: 50%;
-            filter: blur(100px); 
+            filter: blur(100px);
             z-index: -1;
             opacity: 0.5;
             pointer-events: none;
         }
-
-        /* Lueur 1: Rouge central */
         body::before {
-            top: 50%;
-            left: 50%;
-            width: 300px;
-            height: 300px;
+            top: 50%; left: 50%; width: 300px; height: 300px;
             background: radial-gradient(circle, var(--accent-red), transparent 70%);
             transform: translate(-50%, -50%);
             animation: pulse 12s infinite ease-in-out alternate;
         }
-
-        /* Lueur 2: Rouge périphérique */
         body::after {
-            top: 20%;
-            left: 10%;
-            width: 450px;
-            height: 450px;
+            top: 20%; left: 10%; width: 450px; height: 450px;
             background: radial-gradient(circle, rgba(139, 0, 0, 0.4), transparent 70%);
             animation: moveGlow 18s infinite linear alternate;
         }
-
         @keyframes pulse {
             0% { transform: scale(1) translate(-50%, -50%); opacity: 0.4; }
             50% { transform: scale(1.1) translate(-50%, -50%); opacity: 0.6; }
@@ -71,268 +62,143 @@
             0% { transform: translate(0, 0); }
             100% { transform: translate(200px, 150px); }
         }
-        /* ------------------------------------------- */
-
-
-        .container-main {
-            padding-bottom: 8rem;
-            position: relative;
-            z-index: 10;
-        }
+        
+        .container-main { padding-bottom: 8rem; position: relative; z-index: 10; }
         .nav-bar {
-            background-color: rgba(30, 29, 44, 0.85); /* Fond carte sombre transparent */
-            backdrop-filter: blur(10px);
-            border-radius: 9999px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            padding: 0.5rem 1rem;
-            bottom: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 95%;
-            max-width: 400px;
-            z-index: 50;
+            background-color: rgba(30, 29, 44, 0.85); backdrop-filter: blur(10px);
+            border-radius: 9999px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            padding: 0.5rem 1rem; bottom: 1rem; left: 50%;
+            transform: translateX(-50%); width: 95%; max-width: 400px; z-index: 50;
         }
-        .nav-link { 
-            color: #d1d5db; 
-            transition: color 0.2s, transform 0.1s; 
-        }
-        .nav-link.active { color: var(--accent-light); } /* Rouge vif pour l'actif */
+        .nav-link { color: #d1d5db; transition: color 0.2s, transform 0.1s; }
+        .nav-link.active { color: var(--accent-light); }
         .nav-link:active { transform: scale(0.95); }
-
+        
         .product-card {
-            background-color: var(--card-bg); /* Fond carte sombre */
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s; 
+            background-color: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px; overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .product-card:hover { box-shadow: 0 0 20px rgba(255, 51, 51, 0.2); } /* Ombre rouge au survol */
+        .product-card:hover { box-shadow: 0 0 20px rgba(255, 51, 51, 0.2); }
         .product-card:active { transform: scale(0.97); }
         
         .category-pill {
-            background-color: rgba(63, 63, 90, 0.5);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #ffffff;
-            padding: 0.35rem 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-            font-size: 0.875rem;
+            background-color: rgba(63, 63, 90, 0.5); backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff;
+            padding: 0.35rem 1rem; border-radius: 50px; cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s; font-size: 0.875rem;
         }
-        .category-pill:hover,
-        .category-pill.active {
-            background-color: var(--accent-red); 
-            border-color: var(--accent-light);
+        .category-pill:hover, .category-pill.active {
+            background-color: var(--accent-red); border-color: var(--accent-light);
         }
         .category-pill:active { transform: scale(0.95); }
 
-        /* NOUVEAU: Style "bulle" pour la catégorie sur la page produit */
         .category-bubble {
-            background-color: rgba(63, 63, 90, 0.5); /* Fond transparent */
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #ffffff;
-            padding: 0.35rem 0.75rem; /* Padding horizontal légèrement ajusté pour mieux s'adapter */
-            border-radius: 50px; /* Forme pilule/bulle */
-            font-size: 0.875rem; /* Taille de police plus petite */
-            font-weight: 600; /* Garder le font-semibold */
-            text-align: center;
-            
-            /* Styles pour gérer les textes longs */
-            max-width: 150px; /* Largeur maximale pour la bulle */
-            white-space: nowrap; /* Empêche le retour à la ligne */
-            overflow: hidden; /* Cache le texte qui dépasse */
-            text-overflow: ellipsis; /* Ajoute des points de suspension si le texte est tronqué */
+            background-color: rgba(63, 63, 90, 0.5); backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2); color: #ffffff;
+            padding: 0.35rem 0.75rem; border-radius: 50px;
+            font-size: 0.875rem; font-weight: 600; text-align: center;
+            max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        /* FIN NOUVEAU */
-
-        /* Correction CSS pour le carrousel d'accueil */
-         #hero-carousel-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-            /* width: fit-content; // Géré par JS */
-         }
-         .hero-carousel-item {
-            flex-shrink: 0;
-            width: 100%; /* Géré par JS */
-            height: auto; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-         }
         
-        /* Ajustements pour le carrousel d'accueil pour s'adapter à l'image */
-         #hero-carousel-container { 
-            height: auto; 
-            overflow: hidden; 
-         }
-         #hero-carousel-track img,
-         #hero-carousel-track video {
-            height: 100%; 
+        #hero-carousel-track { display: flex; transition: transform 0.5s ease-in-out; }
+        .hero-carousel-item { flex-shrink: 0; width: 100%; height: auto; display: flex; justify-content: center; align-items: center; position: relative; }
+        #hero-carousel-container { height: auto; overflow: hidden; }
+        #hero-carousel-track img, #hero-carousel-track video {
+            height: 100%; width: 100%; object-fit: cover; max-height: 250px;
+        }
+        
+        .product-page-image-container {
             width: 100%;
-            object-fit: cover; 
-            max-height: 250px; /* Limiter la hauteur pour les grands écrans */
-         }
-        /* Fin ajustements */
-
-
-        /* MODIFICATION DEMANDÉE : Amélioration du visuel de la fiche produit */
-        .product-page-image-container { 
-            width: 100%;
-            /* CHANGEMENT: Remplacement du ratio carré par un ratio 4/5 (plus grand/haut) */
-            aspect-ratio: 4 / 5; /* <-- MODIFIÉ */
-            /* height: 350px; <-- SUPPRIMÉ */
-            max-height: 70vh; /* <-- MODIFIÉ: Augmentation de la hauteur max */
+            aspect-ratio: 4 / 5;
+            max-height: 70vh;
             overflow: hidden;
             position: relative;
-            background-color: #000; 
-            /* Ajout de marges autour */
+            background-color: #000;
             margin-left: auto;
             margin-right: auto;
             max-width: 400px;
         }
-        
-        /* MODIFICATION DEMANDÉE : Styles pour les médias du carrousel de la fiche produit (zoom léger et centrage) */
         .carousel-item img, .carousel-item iframe, .carousel-item video {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* CHANGEMENT: 'contain' (ajuster au milieu) remplacé par 'cover' (remplir/adapter) */
-            object-position: center; /* MODIFIÉ: Centré */
+            object-fit: cover;
+            object-position: center;
             border-radius: 12px;
         }
-        
-        /* CORRECTION: Ajout de height: 100% pour remplir le conteneur */
         .carousel-slide { display: flex; transition: transform 0.5s ease-in-out; height: 100%; }
         .carousel-item { flex-shrink: 0; width: 100%; height: 100%; }
         
         .carousel-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 0.5rem;
-            cursor: pointer;
-            z-index: 20;
-            border-radius: 9999px;
-            opacity: 0.8;
-            transition: opacity 0.3s;
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5); color: white; border: none;
+            padding: 0.5rem; cursor: pointer; z-index: 20; border-radius: 9999px;
+            opacity: 0.8; transition: opacity 0.3s;
         }
         .carousel-button:hover { opacity: 1; }
         .carousel-button.left { left: 10px; }
         .carousel-button.right { right: 10px; }
-
-
-        .action-button { 
-            transition: transform 0.1s; 
-            width: 100%;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.875rem;
+        
+        .action-button {
+            transition: transform 0.1s; width: 100%; padding: 0.75rem;
+            border-radius: 0.5rem; font-weight: bold; display: flex;
+            align-items: center; justify-content: center; font-size: 0.875rem;
         }
         .action-button:active { transform: scale(0.97); }
         .order-button { background-color: var(--accent-light); color: white; }
         .order-button:hover { background-color: var(--accent-red); }
-
+        
         .add-to-cart-button-new {
-            background-color: var(--card-bg);
-            border: 1px solid var(--accent-red);
+            background-color: var(--card-bg); border: 1px solid var(--accent-red);
             color: var(--accent-light);
         }
         .add-to-cart-button-new:hover { background-color: rgba(255, 51, 51, 0.1); }
-
-
-        /* CORRECTION: S'assurer que la page panier est bien masquée et recouvre tout l'écran */
-        .cart-page { 
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-dark); 
-            z-index: 50;
-            overflow-y: auto;
-            /* Utilisation d'opacity et pointer-events pour garantir le masquage */
-            visibility: hidden;
-            opacity: 0;
+        
+        .cart-page {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-dark); z-index: 50; overflow-y: auto;
+            visibility: hidden; opacity: 0;
             transition: visibility 0s 0.3s, opacity 0.3s ease-in-out;
-            /* MODIFICATION: Augmentation du padding-bottom pour le total sticky */
-            padding-bottom: 10rem; 
+            padding-bottom: 10rem;
         }
-        .cart-page.open { 
-            visibility: visible;
-            opacity: 1;
-            transition: opacity 0.3s ease-in-out;
-        }
-        /* FIN CORRECTION */
-
-        /* NOUVEAU STYLE TOAST (Notification d'ajout au panier) */
+        .cart-page.open { visibility: visible; opacity: 1; transition: opacity 0.3s ease-in-out; }
+        
         #message-modal {
-            position: fixed;
-            bottom: 5rem; /* Au-dessus de la barre de navigation */
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
+            position: fixed; bottom: 5rem; left: 50%; transform: translateX(-50%);
+            z-index: 100; opacity: 0; pointer-events: none;
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-out;
-            width: 90%;
-            max-width: 300px;
+            width: 90%; max-width: 300px;
         }
         #message-modal.show {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateX(-50%) translateY(-20px); /* Petit effet de glissement vers le haut */
+            opacity: 1; pointer-events: auto;
+            transform: translateX(-50%) translateY(-20px);
         }
         .modal-content {
-            background: var(--accent-red); /* Utiliser la couleur d'accentuation pour la notification */
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px; /* Forme pilule */
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.5);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: var(--accent-red); color: white;
+            padding: 0.75rem 1.5rem; border-radius: 9999px;
+            text-align: center; box-shadow: 0 4px 15px rgba(255, 51, 51, 0.5);
+            display: flex; justify-content: space-between; align-items: center;
         }
         .modal-content button {
-            background: transparent;
-            border: none;
-            color: white;
-            font-weight: bold;
-            padding: 0 0.5rem;
-            font-size: 0.875rem;
-            cursor: pointer;
+            background: transparent; border: none; color: white;
+            font-weight: bold; padding: 0 0.5rem; font-size: 0.875rem; cursor: pointer;
         }
-        /* FIN NOUVEAU STYLE TOAST */
-
-
+        
         .cart-page-header { background-color: var(--bg-dark); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
         
-        /* NOUVEAU STYLE PILULE ET EFFET LUMIÈRE POUR LES BOUTONS DE POIDS */
-        .weight-button { 
-            background-color: #33334d; 
-            border-radius: 9999px; /* Forme pilule */
-            padding: 0.5rem 1rem;
-            font-weight: 500;
-            color: #ffffff;
-            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s; 
+        .weight-button {
+            background-color: #33334d; border-radius: 9999px;
+            padding: 0.5rem 1rem; font-weight: 500; color: #ffffff;
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
             text-align: center;
         }
         .weight-button:active { transform: scale(0.95); }
-        .weight-button.active { 
-            background-color: var(--accent-red); 
-            box-shadow: 0 0 15px rgba(255, 51, 51, 0.6); /* Effet de lueur rouge */
-            transform: scale(1.05); 
+        .weight-button.active {
+            background-color: var(--accent-red);
+            box-shadow: 0 0 15px rgba(255, 51, 51, 0.6);
+            transform: scale(1.05);
         }
-
+        
         .separator { width: 50%; height: 1px; background-color: rgba(255, 255, 255, 0.1); margin: 1rem auto; }
         
         .variety-btn { transition: transform 0.1s; border-color: #33334d; }
@@ -342,58 +208,33 @@
             color: white;
         }
         .variety-btn:active { transform: scale(0.95); }
-
-        /* AMÉLIORATION DE LA LISIBILITÉ SUR MOBILE */
-        .product-page-content h2 {
-            font-size: 1.75rem; /* Augmenter légèrement la taille du nom du produit */
-        }
-        .product-options h3 {
-             font-size: 1.2rem; /* Taille plus confortable pour les titres de section */
-        }
-
-        /* --- SPLASH SCREEN STYLES --- */
-        #splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-dark);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 1;
-            /* Temps de transition ajusté pour le dézoom */
-            transition: opacity 0.5s ease-in-out; 
-        }
-        #splash-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .splash-logo {
-            width: 150px;
-            height: 150px;
-            /* AJOUT : Bords arrondis pour l'effet pilule/rond */
-            border-radius: 50%; 
-            /* MODIFICATION DE L'ANIMATION */
-            animation: zoomOutPulse 0.7s forwards; /* Durée de l'animation ajustée */
-        }
         
-        /* Animation de Dézoom/Zoom-Out */
-        @keyframes zoomOutPulse {
-            0% { transform: scale(2.0); opacity: 1; } /* Commence très grand */
-            50% { transform: scale(1.0); opacity: 1; } /* Fait une pause à la taille normale */
-            100% { transform: scale(0); opacity: 0; } /* Disparaît en se réduisant à zéro */
+        .product-page-content h2 { font-size: 1.75rem; }
+        .product-options h3 { font-size: 1.2rem; }
+        
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--bg-dark); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 1; transition: opacity 0.5s ease-in-out;
         }
-        /* --------------------------- */
+        #splash-screen.hidden { opacity: 0; pointer-events: none; }
+        .splash-logo {
+            width: 150px; height: 150px; border-radius: 50%;
+            animation: zoomOutPulse 0.7s forwards;
+        }
+        @keyframes zoomOutPulse {
+            0% { transform: scale(2.0); opacity: 1; }
+            50% { transform: scale(1.0); opacity: 1; }
+            100% { transform: scale(0); opacity: 0; }
+        }
     </style>
 </head>
 <body class="bg-[--bg-dark] text-white">
 
     <!-- Écran de Démarrage (Splash Screen) -->
     <div id="splash-screen">
-        <img src="https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/Logo.jpg" alt="Pharma Logo" class="splash-logo">
+        <img src="https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/Logo.jpg" alt="Logo" class="splash-logo">
     </div>
 
     <!-- Section principale de l'application -->
@@ -415,9 +256,8 @@
         <!-- Section des catégories -->
         <section class="py-8">
             <h2 class="text-xl font-bold mb-4 text-center">Catégorie</h2>
-            <!-- MISE A JOUR: Wrapper pour les catégories -->
             <div class="category-section-wrapper flex justify-center flex-wrap gap-3 mx-auto max-w-[18rem]">
-                <span class="category-pill" onclick="toggleFilter(this, 'cali canadienne 🇨🇦')">CALI CANADIENNE 🇨🇦</span><span class="category-pill" onclick="toggleFilter(this, 'hash🍫')">HASH🍫</span><span class="category-pill" onclick="toggleFilter(this, 'bonbon🍬')">BONBON🍬</span><span class="category-pill" onclick="toggleFilter(this, 'usa import')">USA IMPORT</span><span class="category-pill" onclick="toggleFilter(this, 'neige ❄️')">NEIGE ❄️</span><span class="category-pill" onclick="toggleFilter(this, 'extasy 💊')">EXTASY 💊</span><span class="category-pill" onclick="toggleFilter(this, 'cali loose 🇺🇸')">CALI LOOSE 🇺🇸</span>
+                <span class="category-pill" onclick="toggleFilter(this, 'cali canadienne 🇨🇦')">CALI CANADIENNE 🇨🇦</span><span class="category-pill" onclick="toggleFilter(this, 'hash🍫')">HASH🍫</span><span class="category-pill" onclick="toggleFilter(this, 'Haze 🔝🇳🇱⚡️')">HAZE 🔝🇳🇱⚡️</span><span class="category-pill" onclick="toggleFilter(this, 'usa import📦')">USA IMPORT📦</span><span class="category-pill" onclick="toggleFilter(this, 'bonbon🍬')">BONBON🍬</span><span class="category-pill" onclick="toggleFilter(this, 'neige ❄️')">NEIGE ❄️</span><span class="category-pill" onclick="toggleFilter(this, 'extasy 💊')">EXTASY 💊</span><span class="category-pill" onclick="toggleFilter(this, 'cali loose 🇺🇸')">CALI LOOSE 🇺🇸</span>
             </div>
         </section>
 
@@ -433,20 +273,16 @@
     <!-- Section Fiche Produit (cachée par défaut) -->
     <div id="product-page" class="hidden relative">
         <div class="product-page-content mx-auto p-4 max-w-sm overflow-hidden pb-32">
-            <!-- MODIFICATION: Layout de l'en-tête ajusté pour centrer le logo et mettre la catégorie à droite -->
             <header class="p-4 bg-transparent text-white flex justify-between items-center sticky top-0 z-50">
-                <!-- Gauche: Bouton retour (taille fixe pour l'équilibre) -->
-                <!-- MODIFICATION: Ajout du style bulle -->
-                <button onclick="window.hideProduct()" class="text-white text-2xl rounded-full bg-[rgba(63,63,90,0.5)] backdrop-blur-sm border border-[rgba(255,255,255,0.2)] hover:bg-[rgba(63,63,90,0.8)] transition-colors active:scale-90 w-10 h-10 flex items-center justify-center"><i class="fas fa-arrow-left"></i></button>
+                <button onclick="window.hideProduct()" class="text-white text-2xl rounded-full bg-[rgba(63,63,90,0.5)] backdrop-blur-sm border border-[rgba(255,255,255,0.2)] hover:bg-[rgba(63,63,90,0.8)] transition-colors active:scale-90 w-10 h-10 flex items-center justify-center">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
                 
-                <!-- Centre: Logo (MODIFIÉ: h-12 w-12 -> h-16 w-16) -->
                 <img src="https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/Logo.jpg" alt="Logo" class="h-16 w-16 rounded-md border border-white/20">
                 
-                <!-- Droite: Bulle de catégorie -->
                 <h1 id="product-category" class="category-bubble uppercase"></h1>
             </header>
             
-            <!-- MODIFICATION APPLIQUÉE : Le conteneur d'image utilise maintenant les nouveaux styles CSS -->
             <div class="product-page-image-container rounded-xl shadow-lg mb-4">
                 <div id="carousel-track" class="carousel-slide">
                     <!-- Les images/videos de toutes les variétés seront injectées ici -->
@@ -491,7 +327,6 @@
         <div id="cart-items-page" class="flex-grow p-4">
             <!-- Les articles du panier seront injectés ici -->
         </div>
-        <!-- MODIFICATION: Positionnement du total du panier -->
         <div class="cart-page-total flex justify-between items-center px-4 py-6 border-t border-gray-700 sticky bottom-[5rem] bg-[--bg-dark] shadow-lg z-10">
             <div class="text-xl font-bold">Total: <span id="cart-total-page">0€</span></div>
             <button onclick="window.placeOrder()" class="buy-button py-3 px-6 rounded-lg text-lg font-bold order-button active:scale-[0.97]">
@@ -511,28 +346,26 @@
 
     <!-- Barre de navigation en bas -->
      <nav class="nav-bar fixed bottom-4 flex justify-around items-center h-16 shadow-lg">
-         
         <a href="#" onclick="window.showHome()" class="nav-link flex flex-col items-center">
             <i class="fas fa-home text-xl"></i>
             <span class="text-xs mt-1">Accueil</span>
         </a>
-      
+        
         <a href="#" onclick="window.openExternalLink('https://chat.whatsapp.com/DfLZzmR55YGEB9uTJBPSPe?mode=wwt', this)" class="nav-link flex flex-col items-center">
             <i class="fab fa-whatsapp text-xl"></i>
-            <span class="text-xs mt-1">WhatsApp</span>
+            <span class="text-xs mt-1">Whatsapp</span>
         </a>
-          
+        
         <a href="#" onclick="window.openExternalLink('https://t.me/PharmaCompanyy7', this)" class="nav-link flex flex-col items-center">
             <i class="fab fa-telegram text-xl"></i>
             <span class="text-xs mt-1">Telegram</span>
         </a>
-          
+        
         <a href="#" onclick="window.openCartPage()" class="nav-link relative flex flex-col items-center">
             <i class="fas fa-shopping-basket text-xl"></i>
             <span class="text-xs mt-1">Panier</span>
             <span id="cart-counter" class="absolute top-0 right-2 bg-red-500 rounded-full text-xs font-bold w-5 h-5 flex items-center justify-center -mt-2" style="display: none;">0</span>
         </a>
-      
      </nav>
 
     <!-- Scripts JavaScript -->
@@ -540,189 +373,9 @@
         // #############################################################
         // # DÉBUT DE L'INJECTION DE DONNÉES
         // #############################################################
-        const products = {
-    "prod_1762370332223": {
-        "id": "prod_1762370332223",
-        "name": "Drysift 90u",
-        "prices": {
-            "25": null,
-            "50": null,
-            "100": null,
-            "demi": null,
-            "piece": null
-        },
-        "category": "hash🍫",
-        "varieties": [
-            "Vanilla Velvet"
-        ],
-        "images": [
-            "https://github.com/ZATI53/Pharma/blob/main/Photo2.jpg?raw=true"
-        ],
-        "mediaMap": {
-            "Vanilla Velvet": [
-                "https://github.com/ZATI53/Pharma/raw/refs/heads/main/HASH1.MP4",
-                "https://github.com/ZATI53/Pharma/raw/refs/heads/main/HASH2.MP4",
-                "https://github.com/ZATI53/Pharma/raw/refs/heads/main/HASH3.MP4"
-            ]
-        },
-        "extraInfo": "JBILO FARMZ",
-        "extraInfoColor": "#08d489",
-        "extraInfoBackgroundColor": "#000000",
-        "color": "#ffffff",
-        "cardColor": "#2a2a47"
-    },
-    "prod_1762372634015": {
-        "id": "prod_1762372634015",
-        "name": "Cali Cannadienne",
-        "prices": {
-            "25": null,
-            "50": null,
-            "100": null,
-            "Demi": null,
-            "Piece": null
-        },
-        "category": "cali canadienne 🇨🇦",
-        "varieties": [
-            "Candi Ski",
-            "Frosted Melk",
-            "GMO Cake",
-            "Jungle Breath",
-            "King Glue",
-            "Mimosa",
-            "Pinata Cola",
-            "Purple Grape",
-            "The Reckstar",
-            "Zlusrie"
-        ],
-        "images": [
-            "https://github.com/ZATI53/Pharma/blob/main/Photo1.jpg?raw=true"
-        ],
-        "mediaMap": {
-            "Candi Ski": [
-                "https://github.com/ZATI53/Pharma/raw/refs/heads/main/CANDI%20SKI.MP4"
-            ],
-            "Frosted Melk": [
-                "https://github.com/ZATI53/Pharma/raw/refs/heads/main/FROSTED%20MELK.MP4"
-            ],
-            "GMO Cake": [
-                "https://github.com/ZATI53/Pharma/raw/refs/heads/main/GMO%20CAKE.MP4"
-            ],
-            "Jungle Breath": [
-                "https://github.com/ZATI53/Pharma/raw/refs/heads/main/JUNGLE%20BREATH.MP4"
-            ],
-            "King Glue": [
-                "https://github.com/ZATI53/Pharma/raw/refs/heads/main/KING%20GLUE.MP4"
-            ],
-            "Mimosa": [
-                "https://github.com/ZATI53/Pharma/raw/refs/heads/main/MIMOSA.MP4"
-            ],
-            "Pinata Cola": [
-                "https://github.com/ZATI53/Pharma/raw/refs/heads/main/PINATA%20COLA.MP4"
-            ],
-            "Purple Grape": [
-                "https://github.com/ZATI53/Pharma/raw/refs/heads/main/PURPLEGRAPPE.MP4"
-            ],
-            "The Reckstar": [
-                "https://github.com/ZATI53/Pharma/blob/main/THE%20RECKSTAR.MP4"
-            ],
-            "Zlusrie": [
-                "https://github.com/ZATI53/Pharma/blob/main/Photo1.jpg?raw=true"
-            ]
-        },
-        "extraInfo": "TOPSHELF",
-        "extraInfoColor": "#34d399",
-        "extraInfoBackgroundColor": "#000000",
-        "color": "#ffffff",
-        "cardColor": "#2a2a47"
-    },
-    "prod_1762373105967": {
-        "id": "prod_1762373105967",
-        "name": "Bonbons THC 600MG",
-        "prices": {
-            "1 Bag": null,
-            "5 Bag": null,
-            "10 Bag ": null,
-            "20 Bag": null
-        },
-        "category": "bonbon🍬",
-        "varieties": [
-            "Rancher Gummies"
-        ],
-        "images": [
-            "https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/bonbon%20preview.jpg"
-        ],
-        "mediaMap": {
-            "Rancher Gummies": [
-                "https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/bonbon.mp4"
-            ]
-        },
-        "extraInfo": "Puissant !",
-        "extraInfoColor": "#00fa9e",
-        "extraInfoBackgroundColor": "#000000",
-        "color": "#ffffff",
-        "cardColor": "#2a2a47"
-    },
-    "prod_1762456377203": {
-        "id": "prod_1762456377203",
-        "name": "Extasy 💊",
-        "prices": {
-            "1": 10,
-            "3": 20,
-            "5": 30,
-            "10": 50,
-            "25": 90,
-            "50": 150,
-            "100": 250
-        },
-        "category": "extasy 💊",
-        "varieties": [
-            "Love / 250 MG"
-        ],
-        "images": [
-            "https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/Exta.jpg"
-        ],
-        "mediaMap": {
-            "Love / 250 MG": [
-                "https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/Exta.jpg"
-            ]
-        },
-        "extraInfo": "250MG",
-        "extraInfoColor": "#34d399",
-        "extraInfoBackgroundColor": "#000000",
-        "color": "#ffffff",
-        "cardColor": "#2a2a47"
-    },
-    "prod_1762456584700": {
-        "id": "prod_1762456584700",
-        "name": "Neige ❄️",
-        "prices": {
-            "1G": 60,
-            "2G": 100,
-            "3G": 130,
-            "5G": 180,
-            "10G": 320
-        },
-        "category": "neige ❄️",
-        "varieties": [
-            "Neige ❄️"
-        ],
-        "images": [
-            "https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/neige.jpg"
-        ],
-        "mediaMap": {
-            "Neige ❄️": [
-                "https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/neige.jpg"
-            ]
-        },
-        "extraInfo": null,
-        "extraInfoColor": "#34d399",
-        "extraInfoBackgroundColor": "#000000",
-        "color": "#ffffff",
-        "cardColor": "#2a2a47"
-    }
-};
+        const products = {"prod_1762732429944":{"id":"prod_1762732429944","name":"Haze 🔝🇳🇱⚡️","category":"Haze 🔝🇳🇱⚡️","prices":{"25":null,"50":null,"100":null,"Demi":null,"Piece":null},"varieties":["Haze 🔝⚡️"],"images":["https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/5803189416577666076.jpg"],"mediaMap":{"Haze 🔝⚡️":["https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/haze.MP4"]},"extraInfo":" Qualité Coffe Shop ","extraInfoColor":"#34d399","extraInfoBackgroundColor":"#000000","color":"#ffffff","cardColor":"#2a2a47"},"prod_1762373105967":{"id":"prod_1762373105967","name":"Bonbon THC 600MG ⚠️","prices":{"1 Bag":null,"5 Bag":null,"10 Bag ":null,"20 Bag":null},"category":"bonbon🍬","varieties":["Rancher Gummies"],"images":["https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/bonbon%20preview.jpg"],"mediaMap":{"Rancher Gummies":["https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/bonbon.mp4"]},"extraInfo":"Puissant !","extraInfoColor":"#00fa9e","extraInfoBackgroundColor":"#000000","color":"#ffffff","cardColor":"#2a2a47"},"prod_1762456377203":{"id":"prod_1762456377203","name":"Extasy 💊","prices":{"1":10,"3":20,"5":30,"10":50,"25":90,"50":150,"100":250},"category":"extasy 💊","varieties":["Love / 250 MG"],"images":["https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/Exta.jpg"],"mediaMap":{"Love / 250 MG":["https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/Exta.jpg"]},"extraInfo":"250MG","extraInfoColor":"#34d399","extraInfoBackgroundColor":"#000000","color":"#ffffff","cardColor":"#2a2a47"},"prod_1762456584700":{"id":"prod_1762456584700","name":"Neige ❄️","prices":{"1G":60,"2G":100,"3G":130,"5G":180,"10G":320},"category":"neige ❄️","varieties":["Neige ❄️"],"images":["https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/neige.jpg"],"mediaMap":{"Neige ❄️":["https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/neige.jpg"]},"extraInfo":null,"extraInfoColor":"#34d399","extraInfoBackgroundColor":"#000000","color":"#ffffff","cardColor":"#2a2a47"}};
         const heroImages = ["https://raw.githubusercontent.com/pluggedtmap/Pharma-plug/main/Logo.jpg"];
-        const orderUrl = "https://t.me/PharmaCompanyy7"; // <-- URL DE COMMANDE INJECTÉE
+        const orderUrl = "https://t.me/PharmaCompanyy7";
         // #############################################################
         // # FIN DE L'INJECTION DE DONNÉES
         // #############################################################
@@ -750,137 +403,123 @@
         const addToCartBtn = document.getElementById('add-to-cart-btn');
         const productGrid = document.getElementById('product-grid');
         const productCategoryTitle = document.getElementById('product-category');
-        const heroCarouselContainer = document.getElementById('hero-carousel-container'); // Ajouté
+        const heroCarouselContainer = document.getElementById('hero-carousel-container');
         const heroCarouselTrack = document.getElementById('hero-carousel-track'); // Accueil
         const heroCarouselDots = document.getElementById('hero-carousel-dots'); // Accueil
-        const splashScreen = document.getElementById('splash-screen'); // Ajouté
-        const navLinks = document.querySelectorAll('.nav-link'); // Pour la navigation active
+        const splashScreen = document.getElementById('splash-screen');
+        const navLinks = document.querySelectorAll('.nav-link');
 
-        // --- Carrousel d'Accueil (JS CORRIGÉ) ---
-         function updateHeroCarousel() {
-             if (!heroCarouselTrack || !heroCarouselDots || !heroCarouselContainer) return; 
+        // --- Carrousel d'Accueil ---
+        function updateHeroCarousel() {
+            if (!heroCarouselTrack || !heroCarouselDots || !heroCarouselContainer) return;
+            const totalImages = (heroImages || []).length;
+            heroCarouselTrack.innerHTML = '';
+            heroCarouselDots.innerHTML = '';
+            
+            if (totalImages === 0) {
+                heroCarouselContainer.style.display = 'none';
+                return;
+            }
+            heroCarouselContainer.style.display = 'block';
+            
+            heroCarouselTrack.style.width = `${totalImages * 100}%`;
+            const slideWidth = 100 / totalImages;
 
-             const totalImages = (heroImages || []).length;
-             heroCarouselTrack.innerHTML = '';
-             heroCarouselDots.innerHTML = '';
-             
-             // S'il n'y a pas d'images, on cache le conteneur
-             if (totalImages === 0) {
-                 heroCarouselContainer.style.display = 'none';
-                 return;
-             }
-             heroCarouselContainer.style.display = 'block';
-             
-             heroCarouselTrack.style.width = `${totalImages * 100}%`;
-             const slideWidth = 100 / totalImages;
+            (heroImages || []).forEach((url, index) => {
+                const item = document.createElement('div');
+                item.className = 'hero-carousel-item';
+                item.style.width = `${slideWidth}%`;
+                
+                let content = url.toLowerCase().includes('.mp4')
+                    ? `<video autoplay controls playsinline loop muted class="w-full h-full object-cover"><source src="${url}" type="video/mp4">Vidéo non supportée.</video>`
+                    : `<img src="${url}" alt="Image d'accueil ${index + 1}" class="w-full h-full object-cover" onerror="this.parentElement.style.display='none';">`;
+                item.innerHTML = content;
+                heroCarouselTrack.appendChild(item);
 
-             (heroImages || []).forEach((url, index) => { 
-                 const item = document.createElement('div');
-                 item.className = 'hero-carousel-item'; // Utilisation de la nouvelle classe
-                 item.style.width = `${slideWidth}%`;
-                 
-                 let content;
-                 if (url.toLowerCase().includes('.mp4')) { 
-                    content = `<video autoplay controls playsinline loop muted class="w-full h-full object-cover"><source src="${url}" type="video/mp4">Vidéo non supportée.</video>`;
-                 } else {
-                    content = `<img src="${url}" alt="Image d'accueil ${index + 1}" class="w-full h-full object-cover" onerror="this.parentElement.style.display='none';">`;
-                 }
-                 item.innerHTML = content;
-                 
-                 heroCarouselTrack.appendChild(item);
-
-                 const dot = document.createElement('span');
-                 dot.setAttribute('data-index', index);
-                 dot.onclick = () => goToHeroSlide(index); 
-                 dot.className = 'w-2 h-2 rounded-full bg-white/50 transition-all cursor-pointer'; 
-                 if(index === heroSlideIndex) dot.classList.add('bg-white');
-                 heroCarouselDots.appendChild(dot);
-             });
-             
-             heroCarouselDots.style.display = (heroImages && heroImages.length > 1) ? 'flex' : 'none';
-             
-             if (heroCarouselTrack) { 
+                const dot = document.createElement('span');
+                dot.setAttribute('data-index', index);
+                dot.onclick = () => goToHeroSlide(index);
+                dot.className = 'w-2 h-2 rounded-full bg-white/50 transition-all cursor-pointer';
+                if(index === heroSlideIndex) dot.classList.add('bg-white');
+                heroCarouselDots.appendChild(dot);
+            });
+            
+            heroCarouselDots.style.display = (heroImages && heroImages.length > 1) ? 'flex' : 'none';
+            if (heroCarouselTrack) {
                 heroCarouselTrack.style.transform = `translateX(-${heroSlideIndex * slideWidth}%)`;
-             }
-         }
-
-         function goToHeroSlide(index) {
-             if (index === heroSlideIndex) return;
-             heroSlideIndex = index;
-             updateHeroCarousel();
-             startHeroCarousel(); // Redémarre le timer
-         }
-
-         function startHeroCarousel() {
-             if (heroCarouselInterval) clearInterval(heroCarouselInterval);
-             if (heroImages && heroImages.length > 1) {
-                 heroCarouselInterval = setInterval(() => {
-                     heroSlideIndex = (heroSlideIndex + 1) % heroImages.length;
-                     updateHeroCarousel();
-                 }, 3000); // 3 secondes
-             }
-         }
-        // --- Fin Carrousel d'Accueil ---
-
-
+            }
+        }
+        function goToHeroSlide(index) {
+            if (index === heroSlideIndex) return;
+            heroSlideIndex = index;
+            updateHeroCarousel();
+            startHeroCarousel();
+        }
+        function startHeroCarousel() {
+            if (heroCarouselInterval) clearInterval(heroCarouselInterval);
+            if (heroImages && heroImages.length > 1) {
+                heroCarouselInterval = setInterval(() => {
+                    heroSlideIndex = (heroSlideIndex + 1) % heroImages.length;
+                    updateHeroCarousel();
+                }, 3000);
+            }
+        }
+        
         // --- Gestion Panier ---
         function saveCart() { localStorage.setItem('cartItems', JSON.stringify(cartItems)); updateCartCounter(); }
-        function updateCartCounter() { 
-            let count = 0; 
-            for (const itemId in cartItems) count += cartItems[itemId].quantity; 
-            if (cartCounter) { 
+        function updateCartCounter() {
+            let count = 0;
+            for (const itemId in cartItems) count += cartItems[itemId].quantity;
+            if (cartCounter) {
                 cartCounter.textContent = count;
                 cartCounter.style.display = count > 0 ? 'flex' : 'none';
             }
         }
-        // --- Fin Gestion Panier ---
-
-        // --- Grille Produits (Logique de génération depuis le JS du template) ---
+        
+        // --- Grille Produits ---
         function initProductGrid() {
-             if (!productGrid) return;
-             productGrid.innerHTML = '';
-             const allProducts = Object.values(products || {}); // Sécurité
-             const displayedProducts = currentFilter ? allProducts.filter(p => p.category === currentFilter) : allProducts;
-             productGrid.className = displayedProducts.length === 1 ? 'flex justify-center pt-4' : 'grid grid-cols-2 gap-4 pt-4'; // Rétabli gap-4
-             if (displayedProducts.length === 0) { productGrid.innerHTML = '<p class="text-center text-gray-400 col-span-full py-10">Restock en cours...</p>'; }
-             else {
-                 displayedProducts.forEach(product => {
-                     const card = document.createElement('div');
-                     card.className = 'product-card cursor-pointer active:scale-[0.97]';
-                     card.style.backgroundColor = product.cardColor || '#1e1d2c'; // Nouvelle couleur de carte
-                     if (displayedProducts.length === 1) card.classList.add('w-full', 'max-w-xs');
-                     card.onclick = () => showProduct(product.id);
-                     
-                     let imageUrl = (product.images && product.images.length > 0) ? product.images[0] : 'https://placehold.co/600x600/1e1d2c/ff3333?text=Image+Produit';
-                     
-                     let extraInfo = '';
-                     if (product.extraInfo) {
-                           const infoTextColor = product.extraInfoColor || '#ff3333'; // Rouge clair
-                           const infoBgColor = product.extraInfoBackgroundColor || '#000000'; // Fond noir
-                           extraInfo += `<p class="text-xs font-bold mt-1"><span class="px-2 py-0.5 rounded-full inline-block" style="color: ${infoTextColor}; background-color: ${infoBgColor};">${product.extraInfo.toUpperCase()}</span></p>`;
-                     } else if (product.varieties && product.varieties.length > 1 && !(product.varieties.length === 1 && product.varieties[0] === product.name)) {
-                           extraInfo += `<p class="text-xs font-bold mt-1"><span class="bg-red-900/50 px-2 py-0.5 rounded-full inline-block text-red-300">${product.varieties.length} VARIÉTÉS</span></p>`;
-                     }
+            if (!productGrid) return;
+            productGrid.innerHTML = '';
+            const allProducts = Object.values(products || {});
+            const displayedProducts = currentFilter ? allProducts.filter(p => p.category === currentFilter) : allProducts;
+            productGrid.className = displayedProducts.length === 1 ? 'flex justify-center pt-4' : 'grid grid-cols-2 gap-4 pt-4';
+            if (displayedProducts.length === 0) {
+                productGrid.innerHTML = '<p class="text-center text-gray-400 col-span-full py-10">Restock en cours...</p>';
+            } else {
+                displayedProducts.forEach(product => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card cursor-pointer active:scale-[0.97]';
+                    card.style.backgroundColor = product.cardColor || '#1e1d2c';
+                    if (displayedProducts.length === 1) card.classList.add('w-full', 'max-w-xs');
+                    card.onclick = () => showProduct(product.id);
+                    
+                    let imageUrl = (product.images && product.images.length > 0) ? product.images[0] : 'https://placehold.co/600x600/1e1d2c/ff3333?text=Image+Produit';
+                    
+                    let extraInfo = '';
+                    if (product.extraInfo) {
+                        const infoTextColor = product.extraInfoColor || '#ff3333';
+                        const infoBgColor = product.extraInfoBackgroundColor || '#000000';
+                        extraInfo = `<p class="text-xs font-bold mt-1"><span class="px-2 py-0.5 rounded-full inline-block" style="color: ${infoTextColor}; background-color: ${infoBgColor};">${product.extraInfo.toUpperCase()}</span></p>`;
+                    } else if (product.varieties && product.varieties.length > 1 && !(product.varieties.length === 1 && product.varieties[0] === product.name)) {
+                        extraInfo = `<p class="text-xs font-bold mt-1"><span class="bg-red-900/50 px-2 py-0.5 rounded-full inline-block text-red-300">${product.varieties.length} VARIÉTÉS</span></p>`;
+                    }
 
-                     const titleColor = product.color || '#ffffff'; // Applique couleur titre
-                     
-                     // NOUVEAU: Logique de prix "À partir de"
-                     const validPrices = Object.values(product.prices).filter(p => p !== null && p > 0);
-                     const priceText = validPrices.length > 0 ? `A partir de ${Math.min(...validPrices)}€` : 'Prix sur demande';
-                     
-                     card.innerHTML = `
-                         <img src="${imageUrl}" alt="${product.name}" class="w-full h-32 object-cover rounded-t-xl" onerror="this.src='https://placehold.co/600x400/2a2a47/fff?text=Img'; this.onerror=null;">
-                         <div class="p-2">
-                             <h3 class="font-bold text-sm" style="color: ${titleColor};">${product.name}</h3>
-                             <p class="text-gray-400 text-xs">${priceText}</p>
-                             ${extraInfo}
-                         </div>
-                     `;
-                     productGrid.appendChild(card);
-                 });
-             }
-         }
-        // NOUVEAU: toggleFilter mis à jour pour ne pas dépendre des IDs
+                    const titleColor = product.color || '#ffffff';
+                    const validPrices = Object.values(product.prices).filter(p => p !== null && p > 0);
+                    const priceText = validPrices.length > 0 ? `A partir de ${Math.min(...validPrices)}€` : 'Prix sur demande';
+                    
+                    card.innerHTML = `
+                        <img src="${imageUrl}" alt="${product.name}" class="w-full h-32 object-cover rounded-t-xl" onerror="this.src='https://placehold.co/600x400/2a2a47/fff?text=Img'; this.onerror=null;">
+                        <div class="p-2">
+                            <h3 class="font-bold text-sm" style="color: ${titleColor};">${product.name}</h3>
+                            <p class="text-gray-400 text-xs">${priceText}</p>
+                            ${extraInfo}
+                        </div>
+                    `;
+                    productGrid.appendChild(card);
+                });
+            }
+        }
         window.toggleFilter = function(clickedPill, category) {
             const pills = document.querySelectorAll('.category-pill');
             if (currentFilter === category) {
@@ -894,154 +533,136 @@
                 }
             }
             initProductGrid();
-         };
-
+        };
 
         // --- Carrousel Page Produit ---
-        function pauseAllVideos() { carouselTrack?.querySelectorAll('video').forEach(video => { if (!video.paused) video.pause(); }); } 
+        function pauseAllVideos() { carouselTrack?.querySelectorAll('video').forEach(video => { if (!video.paused) video.pause(); }); }
         function playCurrentVideo() {
-            const currentItem = carouselTrack?.children[currentSlide]; 
+            const currentItem = carouselTrack?.children[currentSlide];
             if (currentItem) { const video = currentItem.querySelector('video'); if (video) { video.currentTime = 0; video.play().catch(e => console.log('Autoplay blocked:', e)); } }
-         }
-        function updateCarousel() { 
-            const totalSlides = carouselTrack?.children.length || 0; 
-            if (totalSlides > 0) { 
-                carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`; 
-                pauseAllVideos(); 
-                playCurrentVideo(); 
+        }
+        function updateCarousel() {
+            const totalSlides = carouselTrack?.children.length || 0;
+            if (totalSlides > 0) {
+                carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+                pauseAllVideos();
+                playCurrentVideo();
                 
-                // --- LOGIQUE INVERSÉE (Slide change -> Bouton sélectionné) ---
                 const currentSlideElement = carouselTrack.children[currentSlide];
                 if (currentSlideElement) {
                     const slideVariety = currentSlideElement.getAttribute('data-variety');
                     if (slideVariety && slideVariety !== selectedVariety) {
-                        // Appelle selectVariety SANS événement pour juste mettre à jour le UI
-                        window.selectVariety(slideVariety, null); 
+                        window.selectVariety(slideVariety, null);
                     }
                 }
-            } 
-        } 
-        window.nextSlide = function() { const total = carouselTrack?.children.length || 0; if (total > 1) { currentSlide = (currentSlide + 1) % total; updateCarousel(); } } 
-        window.prevSlide = function() { const total = carouselTrack?.children.length || 0; if (total > 1) { currentSlide = (currentSlide - 1 + total) % total; updateCarousel(); } } 
+            }
+        }
+        window.nextSlide = function() { const total = carouselTrack?.children.length || 0; if (total > 1) { currentSlide = (currentSlide + 1) % total; updateCarousel(); } }
+        window.prevSlide = function() { const total = carouselTrack?.children.length || 0; if (total > 1) { currentSlide = (currentSlide - 1 + total) % total; updateCarousel(); } }
         if (carouselTrack) {
             carouselTrack.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; pauseAllVideos(); }, { passive: true });
             carouselTrack.addEventListener('touchend', (e) => { endX = e.changedTouches[0].clientX; const diffX = endX - startX; if (diffX > 50) window.prevSlide(); else if (diffX < -50) window.nextSlide(); else playCurrentVideo(); });
         }
 
-
         // --- Modal (Toast) ---
         let toastTimer;
-        function showMessage(message) { 
+        function showMessage(message) {
             const modal = document.getElementById('message-modal');
             const modalText = document.getElementById('modal-text');
             if (modalText) modalText.textContent = message;
             if (modal) {
-                 modal.classList.add('show');
+                modal.classList.remove('hidden'); // Assure-toi qu'il n'est pas 'hidden'
+                modal.classList.add('show');
             }
-            
             if (toastTimer) clearTimeout(toastTimer);
             toastTimer = setTimeout(() => {
-                 window.closeModal();
+                window.closeModal();
             }, 3000);
         }
-        window.closeModal = function() { 
+        window.closeModal = function() {
             const modal = document.getElementById('message-modal');
             if (modal) modal.classList.remove('show');
-        } 
+        }
 
-        // --- Logique Page Produit (JS Corrigé pour .active) ---
+        // --- Logique Page Produit ---
         function updateProductCarousel(product, varietyToHighlight) {
-             if (!carouselTrack) return; 
-             carouselTrack.innerHTML = ''; currentSlide = 0;
-             
-             // NOUVELLE LOGIQUE: Construit le carrousel basé sur TOUTES les variétés
-             let slideIndex = 0;
-             let varietyFound = false;
-             
-             product.varieties.forEach(varietyName => {
-                 const mediaUrls = (product.mediaMap && product.mediaMap[varietyName]) 
-                                     ? product.mediaMap[varietyName] 
-                                     : product.images; // Fallback
-                 
-                 if (mediaUrls && mediaUrls.length > 0) {
-                      mediaUrls.forEach(url => {
-                          const mediaElement = document.createElement('div'); 
-                          mediaElement.className = 'carousel-item'; 
-                          mediaElement.setAttribute('data-variety', varietyName); // Important: lie le slide à la variété
-                          let content = url.toLowerCase().includes('.mp4') ? `<video autoplay controls playsinline loop muted class="w-full h-full"><source src="${url}" type="video/mp4">Vidéo non supportée.</video>` : `<img src="${url}" alt="${product.name}" class="w-full h-full" onerror="this.src='https://placehold.co/600x400/2a2a47/fff?text=Img'; this.onerror=null;">`;
-                          mediaElement.innerHTML = content; 
-                          carouselTrack.appendChild(mediaElement);
-                          
-                          // Trouve le premier slide qui correspond à la variété highlight
-                          if (varietyName === varietyToHighlight && !varietyFound) {
-                              currentSlide = slideIndex;
-                              varietyFound = true;
-                          }
-                          slideIndex++;
-                      });
-                 }
-             });
-             
-             if (carouselTrack.children.length === 0 && product.images && product.images.length > 0) {
-                 carouselTrack.innerHTML = `<div class="carousel-item" data-variety="${varietyToHighlight}"><img src="${product.images[0]}" class="w-full h-full object-cover"></div>`;
-             }
-             
-             updateCarousel();
-         }
+            if (!carouselTrack) return;
+            carouselTrack.innerHTML = ''; currentSlide = 0;
+            let slideIndex = 0;
+            let varietyFound = false;
+            
+            product.varieties.forEach(varietyName => {
+                const mediaUrls = (product.mediaMap && product.mediaMap[varietyName]) ? product.mediaMap[varietyName] : product.images;
+                if (mediaUrls && mediaUrls.length > 0) {
+                    mediaUrls.forEach(url => {
+                        const mediaElement = document.createElement('div');
+                        mediaElement.className = 'carousel-item';
+                        mediaElement.setAttribute('data-variety', varietyName);
+                        let content = url.toLowerCase().includes('.mp4') ? `<video autoplay controls playsinline loop muted class="w-full h-full"><source src="${url}" type="video/mp4">Vidéo non supportée.</video>` : `<img src="${url}" alt="${product.name}" class="w-full h-full" onerror="this.src='https://placehold.co/600x400/2a2a47/fff?text=Img'; this.onerror=null;">`;
+                        mediaElement.innerHTML = content;
+                        carouselTrack.appendChild(mediaElement);
+                        
+                        if (varietyName === varietyToHighlight && !varietyFound) {
+                            currentSlide = slideIndex;
+                            varietyFound = true;
+                        }
+                        slideIndex++;
+                    });
+                }
+            });
+            if (carouselTrack.children.length === 0 && product.images && product.images.length > 0) {
+                carouselTrack.innerHTML = `<div class="carousel-item" data-variety="${varietyToHighlight}"><img src="${product.images[0]}" class="w-full h-full object-cover"></div>`;
+            }
+            updateCarousel();
+        }
         
-        // --- FONCTION CORRIGÉE ---
         window.selectVariety = function(variety, event) {
-             document.querySelectorAll('.variety-btn').forEach(b => b.classList.remove('active')); 
-             
-             if (event) { // Clic sur un bouton
-                 event.currentTarget.classList.add('active'); 
-             } else { // Appel depuis le carrousel
-                 const targetBtn = document.querySelector(`#product-options .variety-btn[data-value="${variety}"]`); 
-                 if(targetBtn) targetBtn.classList.add('active'); 
-             }
-             
-             selectedVariety = variety; 
-             
-             // Ne met à jour le carrousel que si c'est un clic (pour éviter boucle infinie)
-             if (event && currentProduct.mediaMap) {
-                 updateProductCarousel(currentProduct, variety);
-             }
-         };
+            document.querySelectorAll('.variety-btn').forEach(b => b.classList.remove('active'));
+            if (event) {
+                event.currentTarget.classList.add('active');
+            } else {
+                const targetBtn = document.querySelector(`#product-options .variety-btn[data-value="${variety}"]`);
+                if(targetBtn) targetBtn.classList.add('active');
+            }
+            selectedVariety = variety;
+            if (event && currentProduct.mediaMap) {
+                updateProductCarousel(currentProduct, variety);
+            }
+        };
 
         function showProduct(productId) {
             currentProduct = products[productId]; if (!currentProduct) return;
-            if (productName) productName.textContent = currentProduct.name; 
+            if (productName) productName.textContent = currentProduct.name;
             if (productCategoryTitle) productCategoryTitle.textContent = currentProduct.category.toUpperCase();
             selectedVariety = currentProduct.varieties.length > 0 ? currentProduct.varieties[0] : null;
             
-            let varietyHTML = ''; 
+            let varietyHTML = '';
             const showVarieties = !(currentProduct.varieties.length === 1 && currentProduct.varieties[0] === currentProduct.name);
-            
-            if (currentProduct.varieties && currentProduct.varieties.length > 0 && showVarieties) { 
-                varietyHTML = `<div class="mb-6"><h3 class="text-xl font-bold mb-3">Variété:</h3><div class="flex flex-wrap gap-2" id="variety-options">${currentProduct.varieties.map(v => `<button data-value="${v}" class="px-3 py-1 rounded-full border border-gray-600 hover:bg-gray-700 transition-colors text-xs variety-btn" onclick="selectVariety('${v}', event)">${v}</button>`).join('')}</div></div>`; 
+            if (currentProduct.varieties && currentProduct.varieties.length > 0 && showVarieties) {
+                varietyHTML = `<div class="mb-6"><h3 class="text-xl font-bold mb-3">Variété:</h3><div class="flex flex-wrap gap-2" id="variety-options">${currentProduct.varieties.map(v => `<button data-value="${v}" class="px-3 py-1 rounded-full border border-gray-600 hover:bg-gray-700 transition-colors text-xs variety-btn" onclick="selectVariety('${v}', event)">${v}</button>`).join('')}</div></div>`;
             }
             
-            let weightHTML = ''; 
-            if (currentProduct.prices) { 
-                weightHTML = `<div><h3 class="text-xl font-bold mb-3">Poids et Prix:</h3><div class="flex flex-wrap gap-3" id="weight-options">${Object.keys(currentProduct.prices).map(w => `<button data-weight="${w}" class="weight-button" onclick="selectWeight('${w}')"><span class="weight-text">${w}</span><span class="price-text">${currentProduct.prices[w] !== null ? ` ${currentProduct.prices[w]}€` : ''}</span></button>`).join('')}</div></div>`; 
+            let weightHTML = '';
+            if (currentProduct.prices) {
+                weightHTML = `<div><h3 class="text-xl font-bold mb-3">Poids et Prix:</h3><div class="flex flex-wrap gap-3" id="weight-options">${Object.keys(currentProduct.prices).map(w => `<button data-weight="${w}" class="weight-button" onclick="selectWeight('${w}')"><span class="weight-text">${w}</span><span class="price-text">${currentProduct.prices[w] !== null ? ` ${currentProduct.prices[w]}€` : ''}</span></button>`).join('')}</div></div>`;
             }
             
             if (productOptions) productOptions.innerHTML = varietyHTML + weightHTML;
             
             const firstVarietyBtn = document.querySelector('#variety-options .variety-btn');
             if(firstVarietyBtn && selectedVariety){
-                 firstVarietyBtn.classList.add('active');
+                firstVarietyBtn.classList.add('active');
             }
             
-            const firstWeightBtn = document.querySelector('#weight-options .weight-button'); 
-            if (firstWeightBtn) { 
-                firstWeightBtn.classList.add('active'); 
-                selectedWeight = firstWeightBtn.dataset.weight; 
+            const firstWeightBtn = document.querySelector('#weight-options .weight-button');
+            if (firstWeightBtn) {
+                firstWeightBtn.classList.add('active');
+                selectedWeight = firstWeightBtn.dataset.weight;
             }
             
-            updateProductCarousel(currentProduct, selectedVariety); 
-            mainApp?.classList.add('hidden'); 
-            productPage?.classList.remove('hidden'); 
+            updateProductCarousel(currentProduct, selectedVariety);
+            mainApp?.classList.add('hidden');
+            productPage?.classList.remove('hidden');
             window.scrollTo(0, 0);
         }
 
@@ -1057,164 +678,142 @@
 
         // NOUVELLE FONCTION: Pour ouvrir les liens dans une Mini App
         window.openExternalLink = function(url, element) {
-            // D'abord, on met le lien en "actif"
             setActiveNav(element);
-            
-            // On vérifie si on est dans une Mini App Telegram
             if (window.Telegram && window.Telegram.WebApp) {
-                // On utilise l'API de Telegram pour ouvrir le lien
                 window.Telegram.WebApp.openLink(url);
             } else {
-                // Sinon (si on est dans un navigateur normal), on ouvre dans un nouvel onglet
                 console.log("Hors TMA, ouverture via window.open");
                 window.open(url, '_blank');
             }
-
-            // Réinitialise l'état actif après un court instant
-            // (on garde l'ancienne logique de surbrillance)
             setTimeout(() => {
-                const currentActive = cartPage.classList.contains('open') ? 
-                    document.querySelector('a[onclick="window.openCartPage()"]') :
-                    document.querySelector('a[onclick="window.showHome()"]');
+                const currentActive = cartPage.classList.contains('open')
+                    ? document.querySelector('a[onclick="window.openCartPage()"]')
+                    : document.querySelector('a[onclick="window.showHome()"]');
                 setActiveNav(currentActive);
             }, 2000);
         }
 
-
         // --- Navigation et Panier ---
-        window.showHome = function(event) { 
-            // event.preventDefault(); // Empêche le href="#" de remonter en haut
+        window.showHome = function(event) {
             const homeLink = document.querySelector('a[onclick="window.showHome()"]');
             setActiveNav(homeLink);
-            
-            closeCartPage(); 
-            pauseAllVideos(); 
-            productPage?.classList.add('hidden'); 
-            mainApp?.classList.remove('hidden'); 
-            currentFilter = null; 
-            document.querySelectorAll('.category-pill').forEach(pill => pill.classList.remove('active')); 
-            initProductGrid(); 
+            closeCartPage();
+            pauseAllVideos();
+            productPage?.classList.add('hidden');
+            mainApp?.classList.remove('hidden');
+            currentFilter = null;
+            document.querySelectorAll('.category-pill').forEach(pill => pill.classList.remove('active'));
+            initProductGrid();
         }
         
-        window.hideProduct = function() { 
-            pauseAllVideos(); 
-            productPage?.classList.add('hidden'); 
-            mainApp?.classList.remove('hidden'); 
-            // Au retour à l'accueil, réactivez le bouton Accueil
+        window.hideProduct = function() {
+            pauseAllVideos();
+            productPage?.classList.add('hidden');
+            mainApp?.classList.remove('hidden');
             const homeLink = document.querySelector('a[onclick="window.showHome()"]');
             setActiveNav(homeLink);
         }
         
-        window.openCartPage = function(event) { 
-            // event.preventDefault();
+        window.openCartPage = function(event) {
             const cartLink = document.querySelector('a[onclick="window.openCartPage()"]');
             setActiveNav(cartLink);
-            
-            pauseAllVideos(); 
-            cartPage?.classList.add('open'); 
-            mainApp?.classList.add('hidden'); 
-            productPage?.classList.add('hidden'); 
-            updateCartPage(); 
+            pauseAllVideos();
+            cartPage?.classList.add('open');
+            mainApp?.classList.add('hidden');
+            productPage?.classList.add('hidden');
+            updateCartPage();
         }
         
-        window.closeCartPage = function() { 
-            cartPage?.classList.remove('open'); 
-            mainApp?.classList.remove('hidden'); 
-            // Au retour à l'accueil, réactivez le bouton Accueil
+        window.closeCartPage = function() {
+            cartPage?.classList.remove('open');
+            mainApp?.classList.remove('hidden');
             const homeLink = document.querySelector('a[onclick="window.showHome()"]');
             setActiveNav(homeLink);
         }
+
         function updateCartPage() {
             const cartItemsContainer = document.getElementById('cart-items-page'); if (!cartItemsContainer) return; cartItemsContainer.innerHTML = ''; let total = 0; const items = Object.values(cartItems);
             if (items.length === 0) { cartItemsContainer.innerHTML = '<p class="text-center text-gray-400 py-10">Votre panier est vide.</p>'; document.getElementById('cart-total-page').textContent = `0€`; return; }
-            items.forEach(item => { 
-                const itemPrice = item.price || 0; // <-- NOUVEAU: Gère le prix null
-                const itemTotal = itemPrice * item.quantity; 
+            items.forEach(item => {
+                const itemPrice = item.price || 0;
+                const itemTotal = itemPrice * item.quantity;
                 total += itemTotal;
                 const itemElement = document.createElement('div'); itemElement.className = 'cart-page-item flex items-center p-2 mb-2 bg-[--card-bg] rounded-lg shadow-md';
                 const product = products[item.id.split('-')[0]]; let imageUrl = product && product.images.length > 0 ? product.images[0] : 'https://placehold.co/100/1e1d2c/fff?text=Img';
                 itemElement.innerHTML = `<div class="w-16 h-16 rounded-md overflow-hidden mr-4 flex-shrink-0"><img src="${imageUrl}" alt="${item.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100/2a2a47/fff?text=Img'; this.onerror=null;"></div><div class="flex-1 min-w-0"><h4 class="font-semibold truncate">${item.name}</h4><p class="text-sm text-gray-400 truncate">${item.weight} - ${item.variety}</p><p class="text-sm text-gray-400">Quantité: ${item.quantity}</p></div><div class="text-right ml-4 flex-shrink-0"><p class="font-bold">${item.price !== null ? `${itemTotal}€` : '(Sur demande)'}</p><button onclick="removeFromCart('${item.id}')" class="text-red-500 hover:text-red-400 transition-colors text-xs mt-1 active:scale-90"><i class="fas fa-trash-alt mr-1"></i>Supprimer</button></div>`;
                 cartItemsContainer.appendChild(itemElement);
-             }); 
-             const totalPageEl = document.getElementById('cart-total-page');
-             if (totalPageEl) totalPageEl.textContent = `${total}€`;
+            });
+            const totalPageEl = document.getElementById('cart-total-page');
+            if (totalPageEl) totalPageEl.textContent = `${total}€`;
         }
         
         if (addToCartBtn) {
             addToCartBtn.addEventListener('click', () => {
-                 if (!selectedVariety || !selectedWeight) { showMessage("Veuillez sélectionner une variété et un poids."); return; }
-                 const itemId = `${currentProduct.id}-${selectedWeight}-${selectedVariety}`;
-                 if (cartItems[itemId]) cartItems[itemId].quantity++; else cartItems[itemId] = { id: itemId, name: currentProduct.name, variety: selectedVariety, weight: selectedWeight, price: currentProduct.prices[selectedWeight], quantity: 1 };
-                 saveCart(); showMessage(`"${selectedVariety} (${selectedWeight})" ajouté au panier !`);
-             });
+                if (!selectedVariety || !selectedWeight) { showMessage("Veuillez sélectionner une variété et un poids."); return; }
+                const itemId = `${currentProduct.id}-${selectedWeight}-${selectedVariety}`;
+                if (cartItems[itemId]) cartItems[itemId].quantity++; else cartItems[itemId] = { id: itemId, name: currentProduct.name, variety: selectedVariety, weight: selectedWeight, price: currentProduct.prices[selectedWeight], quantity: 1 };
+                saveCart(); showMessage(`"${selectedVariety} (${selectedWeight})" ajouté au panier !`);
+            });
         }
         
         if (buyNowBtn) {
             buyNowBtn.addEventListener('click', () => {
-                 if (!selectedVariety || !selectedWeight) { showMessage("Veuillez sélectionner une variété et un poids."); return; }
-                 const price = currentProduct.prices[selectedWeight]; // <-- NOUVEAU
-                 let message = `Bonjour, je souhaite commander :\n- ${currentProduct.name}\n- Variété: ${selectedVariety}\n- Poids: ${selectedWeight}\n- Quantité: 1\n- Prix total: ${price !== null ? `${price}€` : 'N/A'}`; // <-- NOUVEAU
-                 window.location.href = `${orderUrl}?text=${encodeURIComponent(message)}`;
-             });
+                if (!selectedVariety || !selectedWeight) { showMessage("Veuillez sélectionner une variété et un poids."); return; }
+                const price = currentProduct.prices[selectedWeight];
+                let message = `Bonjour, je souhaite commander :\n- ${currentProduct.name}\n- Variété: ${selectedVariety}\n- Poids: ${selectedWeight}\n- Quantité: 1\n- Prix total: ${price !== null ? `${price}€` : 'N/A'}`;
+                window.location.href = `${orderUrl}?text=${encodeURIComponent(message)}`;
+            });
         }
         
         window.removeFromCart = (itemId) => { delete cartItems[itemId]; saveCart(); updateCartPage(); };
         
-        // Correction : Remplacement de confirm() par un simple appel
-        window.clearCart = () => { 
-            // if(confirm("Vider le panier ?")) { // Remplacé
+        window.clearCart = () => {
             if (Object.keys(cartItems).length > 0) {
-                cartItems = {}; 
-                saveCart(); 
-                updateCartPage(); 
+                cartItems = {};
+                saveCart();
+                updateCartPage();
                 showMessage("Panier vidé.");
             }
-            // } 
         };
         
         window.placeOrder = () => {
-             const items = Object.values(cartItems); if (items.length === 0) { showMessage("Votre panier est vide."); return; }
-             let itemsString = ""; let total = 0;
-             items.forEach((item, i) => { 
-                 const itemPrice = item.price || 0; // <-- NOUVEAU
-                 const itemTotal = itemPrice * item.quantity; 
-                 itemsString += `[${item.name} (${item.variety}, ${item.weight}) x ${item.quantity} -> ${item.price !== null ? `${itemTotal}€` : 'Prix N/A'}]${i < items.length - 1 ? " | " : ""}`; // <-- NOUVEAU
-                 total += itemTotal; 
-             });
-             const fullMessage = `Salut, je voudrais passer une commande : ${itemsString} | Total de la commande : ${total > 0 ? `${total}€` : 'A discuter'} | Merci !`; // <-- NOUVEAU
-             window.location.href = `${orderUrl}?text=${encodeURIComponent(fullMessage)}`;
-             cartItems = {}; saveCart(); updateCartPage(); 
-         };
+            const items = Object.values(cartItems); if (items.length === 0) { showMessage("Votre panier est vide."); return; }
+            let itemsString = ""; let total = 0;
+            items.forEach((item, i) => {
+                const itemPrice = item.price || 0;
+                const itemTotal = itemPrice * item.quantity;
+                itemsString += `[${item.name} (${item.variety}, ${item.weight}) x ${item.quantity} -> ${item.price !== null ? `${itemTotal}€` : 'Prix N/A'}]${i < items.length - 1 ? " | " : ""}`;
+                total += itemTotal;
+            });
+            const fullMessage = `Salut, je voudrais passer une commande : ${itemsString} | Total de la commande : ${total > 0 ? `${total}€` : 'A discuter'} | Merci !`;
+            window.location.href = `${orderUrl}?text=${encodeURIComponent(fullMessage)}`;
+            cartItems = {}; saveCart(); updateCartPage();
+        };
 
         // --- Initialisation ---
         document.addEventListener('DOMContentLoaded', () => {
-             // Afficher le splash screen au début
-             if(splashScreen) splashScreen.style.display = 'flex'; // Changé de 'hidden'
-             
-             // Initialisation de l'API Telegram
-             if (window.Telegram && window.Telegram.WebApp) {
-                 window.Telegram.WebApp.ready();
-                 // Vous pouvez ajouter d'autres initialisations TMA ici si nécessaire
-             }
+            if(splashScreen) splashScreen.style.display = 'flex';
+            
+            if (window.Telegram && window.Telegram.WebApp) {
+                window.Telegram.WebApp.ready();
+            }
 
-             // Initialisation de la boutique après 0.7 seconde
-             setTimeout(() => {
-                 if(splashScreen) splashScreen.classList.add('hidden');
-                 if(mainApp) mainApp.style.visibility = 'visible';
-                 
-                 initProductGrid();
-                 updateHeroCarousel();
-                 startHeroCarousel();
-                 updateCartCounter();
+            setTimeout(() => {
+                if(splashScreen) splashScreen.classList.add('hidden');
+                if(mainApp) mainApp.style.visibility = 'visible';
                 
-                 // Définir l'onglet actif au démarrage
-                 const homeLink = document.querySelector('a[onclick="window.showHome()"]');
-                 setActiveNav(homeLink);
+                initProductGrid();
+                updateHeroCarousel();
+                startHeroCarousel();
+                updateCartCounter();
+                
+                const homeLink = document.querySelector('a[onclick="window.showHome()"]');
+                setActiveNav(homeLink);
 
-             }, 700); // Durée ajustée à 0.7 seconde
-         });
+            }, 700);
+        });
 
-         window.showProduct = showProduct; window.hideProduct = hideProduct; window.openCartPage = openCartPage; window.closeCartPage = closeCartPage; window.closeModal = closeModal; window.selectWeight = selectWeight;
+        window.showProduct = showProduct; window.hideProduct = hideProduct; window.openCartPage = openCartPage; window.closeCartPage = closeCartPage; window.closeModal = closeModal; window.selectWeight = selectWeight;
     </script>
 </body>
 </html>
